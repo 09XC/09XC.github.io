@@ -1,0 +1,291 @@
+{
+  "state": "route-ready",
+  "sector": "technology",
+  "request": {
+    "deliverable": "website",
+    "page_context": "website",
+    "design_target": "web",
+    "product_name": "Solo OS · 一人公司经营作战室",
+    "product_domain": "saas",
+    "page_task": "product-overview",
+    "audience": "general-user",
+    "primary_action": "直接在页面内完成记账式经营操作：录入客户与项目、计算报价、生成每周作战计划并查看经营驾驶舱",
+    "locale": "zh-CN",
+    "responsive": {
+      "mobile_layout": "required"
+    },
+    "delivery_adapter": "static-export",
+    "delivery_format": "single-html",
+    "asset_policy": "inline-base64",
+    "verification_mode": "delivery",
+    "real_assets": [],
+    "product_scope": "single-product",
+    "trust_strategy": "product-proof",
+    "media_strategy": "product-ui",
+    "motion_level": "restrained",
+    "content_density": "medium",
+    "generated_media_mode": "auto",
+    "visual_style": "flat",
+    "style_family": "flat",
+    "composition_mode": "workflow-proof",
+    "layout_selection_confirmed": true,
+    "sector": "technology",
+    "normalization_provenance": {
+      "product_scope": "task-compatible-default",
+      "trust_strategy": "task-compatible-default",
+      "media_strategy": "classified-from-request",
+      "motion_level": "compatible-default",
+      "content_density": "compatible-default",
+      "generated_media_mode": "compatible-default",
+      "visual_style": "classified-from-request",
+      "style_family": "classified-from-request",
+      "composition_mode": "classified-from-request",
+      "layout_selection_confirmed": "classified-from-request",
+      "sector": "classified-from-request"
+    },
+    "style_label": "扁平风",
+    "style_status": "existing",
+    "style_profile_id": "flat-canvas-product",
+    "domain_overlay": "technology-industry",
+    "domain_requirements": [
+      "科技证据",
+      "产品能力",
+      "规格、限制、来源和采用路径",
+      "真实 UI/流程或对象媒体"
+    ],
+    "suggested_style_families": [
+      "technology",
+      "apple",
+      "minimal"
+    ],
+    "reference_sources": [
+      "tech3",
+      "tech4"
+    ]
+  },
+  "defaults_applied": {},
+  "inference_applied": {},
+  "entry_skill": "build-website-page",
+  "skill": "build-website-page",
+  "h5_route": null,
+  "composition": {
+    "catalog": "technology-software-compositions",
+    "catalog_key": "software_composition_catalog",
+    "catalog_status": "draft",
+    "mode": "workflow-proof",
+    "path": "references/sectors/technology/compositions/workflow-proof.md",
+    "selection": "explicit",
+    "evidence_ids": [
+      "composition-tech3-numbered-workflow-chain",
+      "composition-tech3-ui-first-viewport",
+      "composition-tech3-mobile-local-hscroll",
+      "composition-tech4-outcome-then-capability-catalog",
+      "composition-tech4-integration-catalog-local-scroll"
+    ],
+    "responsibility": "Own the page content decision and section order; downstream capabilities may implement structure layout, interaction mechanisms, or media but cannot replace this composition."
+  },
+  "reference_catalog": {
+    "id": "technology-software-reference-pack",
+    "status": "pilot",
+    "source_count": 8,
+    "min_sources_per_page": 1,
+    "max_sources_per_page": 3,
+    "sources": [
+      {
+        "id": "tech3",
+        "sample_code": "Tech3",
+        "urls": [
+          "https://linear.app/"
+        ],
+        "supported_modes": [
+          "workflow-proof"
+        ]
+      },
+      {
+        "id": "tech4",
+        "sample_code": "Tech4",
+        "urls": [
+          "https://zapier.com/workflows"
+        ],
+        "supported_modes": [
+          "workflow-proof"
+        ]
+      },
+      {
+        "id": "tech5",
+        "sample_code": "Tech5",
+        "urls": [
+          "https://docs.stripe.com/"
+        ],
+        "supported_modes": [
+          "platform-reference"
+        ]
+      },
+      {
+        "id": "tech6",
+        "sample_code": "Tech6",
+        "urls": [
+          "https://docs.anthropic.com/",
+          "https://platform.claude.com/docs/en/home"
+        ],
+        "supported_modes": [
+          "platform-reference"
+        ]
+      },
+      {
+        "id": "tech7",
+        "sample_code": "Tech7",
+        "urls": [
+          "https://www.databricks.com/product/pricing"
+        ],
+        "supported_modes": [
+          "plan-decision"
+        ]
+      },
+      {
+        "id": "tech8",
+        "sample_code": "Tech8",
+        "urls": [
+          "https://www.snowflake.com/pricing/",
+          "https://www.snowflake.com/en/pricing-options/"
+        ],
+        "supported_modes": [
+          "plan-decision"
+        ]
+      },
+      {
+        "id": "tech9",
+        "sample_code": "Tech9",
+        "urls": [
+          "https://www.crowdstrike.com/platform/",
+          "https://www.crowdstrike.com/en-us/platform/"
+        ],
+        "supported_modes": [
+          "institution-assurance"
+        ]
+      },
+      {
+        "id": "tech10",
+        "sample_code": "Tech10",
+        "urls": [
+          "https://www.okta.com/customers/"
+        ],
+        "supported_modes": [
+          "institution-assurance"
+        ]
+      }
+    ],
+    "mechanism_dimensions": [
+      {
+        "id": "information_architecture",
+        "label": "Information architecture"
+      },
+      {
+        "id": "trust_and_conversion",
+        "label": "Trust and conversion"
+      },
+      {
+        "id": "visual_language",
+        "label": "Visual language"
+      },
+      {
+        "id": "media_strategy",
+        "label": "Media strategy"
+      },
+      {
+        "id": "responsive_behavior",
+        "label": "Responsive behavior"
+      },
+      {
+        "id": "interaction_and_motion",
+        "label": "Interaction and motion"
+      }
+    ]
+  },
+  "reference_trace": {
+    "catalog": "technology-software-reference-pack",
+    "selection": "default-for-composition",
+    "composition_mode": "workflow-proof",
+    "available_source_count": 8,
+    "min_sources_per_page": 1,
+    "max_sources_per_page": 3,
+    "selected_source_count": 2,
+    "source_ids": [
+      "tech3",
+      "tech4"
+    ],
+    "sources": [
+      {
+        "id": "tech3",
+        "sample_code": "Tech3",
+        "evidence_source_id": "composition-tech3-product-overview",
+        "evidence_ids": [
+          "composition-tech3-numbered-workflow-chain",
+          "composition-tech3-ui-first-viewport",
+          "composition-tech3-mobile-local-hscroll"
+        ],
+        "supported_modes": [
+          "workflow-proof"
+        ]
+      },
+      {
+        "id": "tech4",
+        "sample_code": "Tech4",
+        "evidence_source_id": "composition-tech4-feature-page",
+        "evidence_ids": [
+          "composition-tech4-outcome-then-capability-catalog",
+          "composition-tech4-integration-catalog-local-scroll"
+        ],
+        "supported_modes": [
+          "workflow-proof"
+        ]
+      }
+    ],
+    "mechanism_dimensions": [
+      "information_architecture",
+      "trust_and_conversion",
+      "visual_language",
+      "media_strategy",
+      "responsive_behavior",
+      "interaction_and_motion"
+    ],
+    "usage_rule": "References inform named structure-layout and interaction-mechanism dimensions; the selected composition owns page content and section order."
+  },
+  "layout_selection": null,
+  "downstream_capabilities": [
+    {
+      "legacy_skill": "product-proof-saas",
+      "capability": "page-workflows/product-proof-saas",
+      "path": "assets/capabilities/product-proof-saas/CAPABILITY.md",
+      "responsibility": "把真实界面、工作流和状态变化变成核心证据",
+      "reason": "trust_strategy=product-proof"
+    }
+  ],
+  "media_generation": {
+    "mode": "auto",
+    "policy": {
+      "requested_mode": "auto",
+      "effective_mode": "auto",
+      "illustration_required": false,
+      "signals": [],
+      "reason": "requested-or-default-mode",
+      "conflict": false
+    },
+    "model": null,
+    "executor": null,
+    "allowed_models": [
+      "comate-image",
+      "dumate-image",
+      "gpt-image-2"
+    ],
+    "model_state": "media-runtime-host-unresolved",
+    "state": "blocked",
+    "trigger": "required-media-slot-without-suitable-supplied-asset",
+    "provenance": "generated-concept",
+    "supplied_assets": [],
+    "runtime_status": "not-requested",
+    "host_source": null,
+    "runtime_host": null
+  },
+  "instruction": "Load the selected composition reference first, then only the resolved capability assets required by the confirmed contract and stack."
+}

@@ -1,0 +1,175 @@
+{
+  "target": "http://127.0.0.1:8766/index.html",
+  "generated_at": "2026-11-26T04:22:45.620Z",
+  "total": 33,
+  "passed": 33,
+  "failed": 0,
+  "steps": [
+    {
+      "id": "skip-link-first-focusable",
+      "ok": true,
+      "detail": "body 首个可聚焦元素是 a[href=\"#main\"]"
+    },
+    {
+      "id": "composition-sections",
+      "ok": true,
+      "detail": "1,2,3,4,4,4,4,5,7"
+    },
+    {
+      "id": "hero-inside-first-fold",
+      "ok": true,
+      "detail": "cockpit 底边 617px"
+    },
+    {
+      "id": "next-section-hint",
+      "ok": true,
+      "detail": "首屏底部有下一节提示"
+    },
+    {
+      "id": "keyboard-focus-skip-link",
+      "ok": true,
+      "detail": "Tab 后焦点 href=#main"
+    },
+    {
+      "id": "empty-state-project",
+      "ok": true,
+      "detail": "空台账给出下一步提示"
+    },
+    {
+      "id": "empty-state-chart",
+      "ok": true,
+      "detail": "无应收时显示占位说明"
+    },
+    {
+      "id": "demo-seed",
+      "ok": true,
+      "detail": "4 个客户 · 6 个项目 rows=6 tasks=24"
+    },
+    {
+      "id": "demo-kpi-nonzero",
+      "ok": true,
+      "detail": "¥52,600 / ¥65,800 / ¥191/h"
+    },
+    {
+      "id": "chart-bars-8",
+      "ok": true,
+      "detail": "bar cols=8"
+    },
+    {
+      "id": "overdue-flag",
+      "ok": true,
+      "detail": "逾期标记数量 1"
+    },
+    {
+      "id": "add-client",
+      "ok": true,
+      "detail": "chips=5 5 个客户 · 6 个项目"
+    },
+    {
+      "id": "add-project",
+      "ok": true,
+      "detail": "rows=7 status=quoted"
+    },
+    {
+      "id": "form-validation",
+      "ok": true,
+      "detail": "错误提示已显示且 aria-invalid=true"
+    },
+    {
+      "id": "status-change",
+      "ok": true,
+      "detail": "状态改为 doing"
+    },
+    {
+      "id": "quote-recompute",
+      "ok": true,
+      "detail": "80h=¥51,200 / 60h=undefined"
+    },
+    {
+      "id": "quote-formula-visible",
+      "ok": true,
+      "detail": "有效工时 = 80 × (1 + 20%) = 96h | 成本 = 96h × ¥400 + ¥0 = ¥38,400 | 建议价 = ¥38,400 ÷ (1 − 25%) = ¥51,200"
+    },
+    {
+      "id": "quote-instalments",
+      "ok": true,
+      "detail": "分期段数 3"
+    },
+    {
+      "id": "quote-to-project",
+      "ok": true,
+      "detail": "rows=8"
+    },
+    {
+      "id": "plan-generate",
+      "ok": true,
+      "detail": "2条 / 周 tasks=24 progress=0 / 24"
+    },
+    {
+      "id": "task-toggle",
+      "ok": true,
+      "detail": "进度 1 / 24"
+    },
+    {
+      "id": "register-payment",
+      "ok": true,
+      "detail": "¥113,800 -> ¥112,800"
+    },
+    {
+      "id": "delete-confirm-cancel",
+      "ok": true,
+      "detail": "对话框打开=true 行数 8->8"
+    },
+    {
+      "id": "import-invalid-safe",
+      "ok": true,
+      "detail": "toast=不是有效的备份文件，原数据未改动"
+    },
+    {
+      "id": "export-backup",
+      "ok": true,
+      "detail": "已生成备份文件"
+    },
+    {
+      "id": "a11y-labels",
+      "ok": true,
+      "detail": "37 个输入均有 label"
+    },
+    {
+      "id": "a11y-button-names",
+      "ok": true,
+      "detail": "26 个按钮均有可访问名称"
+    },
+    {
+      "id": "a11y-dialog-label",
+      "ok": true,
+      "detail": "确认对话框有 aria-labelledby/describedby"
+    },
+    {
+      "id": "keyboard-edit",
+      "ok": true,
+      "detail": "键盘编辑目标时薪 -> 350"
+    },
+    {
+      "id": "reduced-motion",
+      "ok": true,
+      "detail": "transition-duration=0s"
+    },
+    {
+      "id": "zoom-200-no-hscroll",
+      "ok": true,
+      "detail": "zoom2: scrollWidth=1440 innerWidth=1440"
+    },
+    {
+      "id": "mobile-no-overflow",
+      "ok": true,
+      "detail": "390: 390/390"
+    },
+    {
+      "id": "console-clean",
+      "ok": true,
+      "detail": ""
+    }
+  ],
+  "console_errors": []
+}

@@ -1,0 +1,1814 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Solo OS · 一人公司经营作战室</title>
+<meta name="description" content="Solo OS 把接单、定价、排期、回款收进一张桌面：录入一次，驾驶舱、报价区间、每周作战计划与应收账龄自动算给你看。单文件离线运行，数据只存在你自己的浏览器里。">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='6' fill='%230E1116'/%3E%3Crect x='8' y='17' width='4' height='8' fill='%23fff'/%3E%3Crect x='15' y='11' width='4' height='14' fill='%23fff'/%3E%3Crect x='22' y='7' width='4' height='18' fill='%230E7C66'/%3E%3C/svg%3E">
+<style>
+:root{
+  --canvas:#FFFFFF;
+  --soft:#F6F7F9;
+  --soft-2:#FBFCFD;
+  --ink:#0E1116;
+  --ink-2:#242A33;
+  --muted:#5B6472;
+  --muted-2:#7C8595;
+  --line:#E4E7EC;
+  --line-strong:#D0D5DD;
+  --accent:#0E7C66;
+  --accent-hover:#0A6454;
+  --accent-soft:#EAF4F1;
+  --danger:#B42318;
+  --danger-soft:#FEF3F2;
+  --warn:#B45309;
+  --warn-soft:#FFF8EB;
+  --r:6px;
+  --r-lg:8px;
+  --container:1280px;
+  --sans:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+[hidden]{display:none !important}
+body{
+  margin:0;background:var(--canvas);color:var(--ink);
+  font-family:var(--sans);font-size:16px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,p,ul,ol,figure{margin:0}
+ul,ol{padding:0;list-style:none}
+a{color:var(--accent);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+b,strong{font-weight:600}
+button{font:inherit;color:inherit}
+:where(a,button,input,select,textarea,summary,[tabindex]):focus-visible{
+  outline:2px solid var(--accent);outline-offset:2px;border-radius:3px;
+}
+.skip{
+  position:absolute;left:12px;top:-60px;z-index:99;background:var(--ink);color:#fff;
+  padding:10px 16px;border-radius:var(--r);font-size:14px;transition:top .16s;
+}
+.skip:focus{top:12px;text-decoration:none}
+.wrap{max-width:var(--container);margin:0 auto;padding:0 clamp(18px,3.2vw,32px)}
+.mono{font-family:var(--mono);font-size:12px;letter-spacing:.04em;color:var(--muted);text-transform:uppercase}
+.eyebrow{
+  font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:14px;
+}
+.lede{color:var(--muted);font-size:clamp(16px,1.15vw,17px);line-height:1.6;max-width:62ch}
+
+/* top bar */
+.top{
+  position:sticky;top:0;z-index:20;background:rgba(255,255,255,.94);
+  border-bottom:1px solid var(--line);backdrop-filter:saturate(140%) blur(6px);
+}
+.top-in{display:flex;align-items:center;gap:24px;min-height:64px}
+.brand{display:flex;align-items:center;gap:10px;color:inherit;text-decoration:none}
+.brand:hover{text-decoration:none}
+.brand-mark{
+  width:26px;height:26px;border-radius:5px;background:var(--ink);position:relative;flex:none;
+}
+.brand-mark::before,.brand-mark::after{
+  content:"";position:absolute;background:#fff;border-radius:1px;
+}
+.brand-mark::before{left:6px;bottom:6px;width:4px;height:9px}
+.brand-mark::after{left:13px;bottom:6px;width:4px;height:14px}
+.brand-text{display:flex;align-items:baseline;gap:8px;white-space:nowrap}
+.brand-text strong{font-size:17px;letter-spacing:-.01em}
+.brand-text em{font-style:normal;font-size:12px;color:var(--muted);letter-spacing:.02em}
+.nav{display:flex;gap:2px;margin-left:auto}
+.nav a{
+  color:var(--ink-2);font-size:14px;padding:8px 10px;border-radius:var(--r);
+  text-decoration:none;
+}
+.nav a:hover{background:var(--soft);color:var(--ink);text-decoration:none}
+.top-actions{display:flex;align-items:center;gap:10px;margin-left:8px}
+
+/* buttons */
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  min-height:40px;padding:9px 16px;border-radius:var(--r);border:1px solid transparent;
+  font-size:14px;font-weight:600;cursor:pointer;text-decoration:none;
+  transition:background-color .16s,color .16s,border-color .16s,transform .16s;
+}
+.btn:hover{text-decoration:none}
+.btn-primary{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn-primary:hover{background:var(--accent-hover);border-color:var(--accent-hover)}
+.btn-primary:active{transform:translateY(1px)}
+.btn-ghost{background:#fff;color:var(--ink);border-color:var(--line-strong)}
+.btn-ghost:hover{background:var(--soft);border-color:var(--muted-2)}
+.btn-quiet{background:#fff;color:var(--muted);border-color:var(--line)}
+.btn-quiet:hover{color:var(--ink);border-color:var(--line-strong)}
+.btn-sm{min-height:34px;padding:6px 12px;font-size:13px}
+.btn-lg{min-height:48px;padding:12px 22px;font-size:15px}
+.btn[disabled],.btn[aria-disabled="true"]{opacity:.45;cursor:not-allowed}
+.btn-danger{background:#fff;color:var(--danger);border-color:#F3C6C2}
+.btn-danger:hover{background:var(--danger-soft);border-color:var(--danger)}
+
+/* pills + chips */
+.pill{
+  display:inline-flex;align-items:center;gap:6px;font-size:12px;font-weight:600;
+  padding:4px 9px;border-radius:999px;background:var(--accent-soft);color:var(--accent);
+  border:1px solid #CFE5DF;
+}
+.pill-warn{background:var(--warn-soft);color:var(--warn);border-color:#F2DFB8}
+.pill-danger{background:var(--danger-soft);color:var(--danger);border-color:#F3C6C2}
+.pill-muted{background:var(--soft);color:var(--muted);border-color:var(--line)}
+
+/* hero */
+.hero{padding:clamp(40px,5vw,72px) 0 0}
+.hero-grid{
+  display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);
+  gap:clamp(28px,4vw,56px);align-items:start;
+}
+.hero h1{
+  font-size:clamp(34px,4.3vw,58px);line-height:1.06;letter-spacing:-.025em;font-weight:650;
+  margin-bottom:18px;
+}
+.hero .lede{margin-bottom:26px}
+.hero-actions{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+.hero-note{font-size:13px;color:var(--muted-2);max-width:46ch}
+.hero-points{display:grid;gap:8px;margin-top:26px;padding-top:22px;border-top:1px solid var(--line)}
+.hero-points li{display:flex;gap:9px;font-size:14px;color:var(--ink-2)}
+.hero-points li .tick{
+  flex:none;width:16px;height:16px;margin-top:3px;border-radius:50%;
+  background:var(--accent-soft);color:var(--accent);font-size:11px;
+  display:grid;place-items:center;font-weight:700;
+}
+.hero-next{
+  display:flex;align-items:center;gap:10px;margin:clamp(28px,3vw,40px) auto 0;
+  padding-bottom:18px;color:var(--muted);font-size:13px;
+}
+.hero-next::before{content:"";flex:1;height:1px;background:var(--line)}
+
+/* panels */
+.panel{
+  background:#fff;border:1px solid var(--line);border-radius:var(--r-lg);
+}
+.panel-soft{background:var(--soft-2);border:1px solid var(--line);border-radius:var(--r-lg)}
+.cockpit{padding:clamp(16px,1.6vw,22px);border-color:var(--line-strong)}
+.panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}
+.panel-head h2{font-size:15px;font-weight:650;letter-spacing:-.01em}
+.kpis{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.kpi{background:#fff;padding:12px 14px;min-width:0}
+.kpi dt{font-size:12px;color:var(--muted);margin-bottom:6px;display:flex;align-items:center;gap:6px}
+.kpi dd{margin:0;font-size:clamp(20px,1.9vw,26px);font-weight:650;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+.kpi dd small{font-size:12px;font-weight:500;color:var(--muted);margin-left:3px;letter-spacing:0}
+.kpi.is-warn dd{color:var(--warn)}
+.kpi.is-danger dd{color:var(--danger)}
+.chart-block{margin-top:16px}
+.chart-head{display:flex;align-items:baseline;justify-content:space-between;gap:10px;margin-bottom:8px}
+.chart-head span:first-child{font-size:12px;color:var(--muted)}
+.bars{display:grid;grid-template-columns:repeat(8,1fr);gap:6px;align-items:end;height:104px;border-bottom:1px solid var(--line);position:relative}
+.bar-col{display:flex;align-items:flex-end;height:100%}
+.bar{width:100%;background:var(--accent);border-radius:2px 2px 0 0;transition:height .2s}
+.bar-col.is-empty .bar{background:#EDEFF3}
+.bars-empty{
+  position:absolute;inset:0;display:grid;place-items:center;
+  font-size:12px;color:var(--muted-2);pointer-events:none;
+}
+.bars-empty[hidden]{display:none !important}
+.xlabels{display:grid;grid-template-columns:repeat(8,1fr);gap:2px;margin-top:4px}
+.xlabels span{font-family:var(--mono);font-size:10px;color:var(--muted-2);text-align:center}
+.cockpit-foot{
+  margin-top:14px;padding-top:12px;border-top:1px solid var(--line);
+  display:flex;align-items:flex-start;gap:8px;font-size:13px;color:var(--muted);
+}
+.cockpit-foot strong{color:var(--ink)}
+.empty-line{color:var(--muted-2);font-size:13px}
+
+/* bands */
+.band{padding:clamp(52px,7vw,104px) 0;border-top:1px solid var(--line)}
+.band-soft{background:var(--soft-2)}
+.band-head{max-width:74ch;margin-bottom:clamp(26px,3vw,40px)}
+.band h2{font-size:clamp(25px,2.6vw,38px);line-height:1.14;letter-spacing:-.02em;font-weight:650;margin-bottom:12px}
+.stage-head{display:flex;gap:clamp(14px,2vw,22px);align-items:flex-start;margin-bottom:clamp(20px,2.4vw,28px)}
+.stage-no{
+  font-family:var(--mono);font-size:clamp(20px,2vw,26px);font-weight:600;color:var(--accent);
+  line-height:1;padding-top:6px;flex:none;letter-spacing:-.02em;
+}
+.stage-head h3{font-size:clamp(20px,2vw,27px);line-height:1.2;letter-spacing:-.02em;margin-bottom:8px;font-weight:650}
+.stage-head p{color:var(--muted);font-size:15px;max-width:74ch}
+.stage-tag{
+  display:inline-block;margin-top:10px;font-family:var(--mono);font-size:11px;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  border:1px solid var(--line);border-radius:999px;padding:3px 9px;
+}
+
+/* section 2 calculator */
+.calc{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:0;overflow:hidden}
+.calc-form{padding:clamp(18px,2vw,26px);border-right:1px solid var(--line);display:grid;gap:14px;align-content:start}
+.calc-out{padding:clamp(18px,2vw,26px);background:var(--soft-2);display:grid;gap:14px;align-content:start}
+.readout{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
+.readout strong{font-size:clamp(30px,3.4vw,44px);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.readout span{font-size:13px;color:var(--muted)}
+.gapbar{height:8px;border-radius:999px;background:#EDEFF3;overflow:hidden;display:flex}
+.gapbar i{display:block;height:100%}
+.gapbar .kept{background:var(--accent)}
+.gapbar .lost{background:#E0B4AF}
+.calc-note{font-size:14px;color:var(--ink-2);line-height:1.6}
+.calc-note b{color:var(--danger)}
+.formula{
+  font-family:var(--mono);font-size:12px;line-height:1.7;color:var(--muted);
+  background:#fff;border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;
+  overflow-wrap:anywhere;
+}
+
+/* forms */
+.form{display:grid;gap:12px}
+.field{display:grid;gap:6px;min-width:0}
+.field > label,.field-label{font-size:13px;font-weight:600;color:var(--ink-2)}
+.field .hint{font-size:12px;color:var(--muted-2);font-weight:400}
+.input,.select{
+  width:100%;min-height:42px;padding:9px 11px;border:1px solid var(--line-strong);
+  border-radius:var(--r);background:#fff;font-size:15px;color:var(--ink);
+  font-variant-numeric:tabular-nums;transition:border-color .16s,box-shadow .16s;
+}
+.input:hover,.select:hover{border-color:var(--muted-2)}
+.input:focus,.select:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px rgba(14,124,102,.14)}
+.input[aria-invalid="true"]{border-color:var(--danger);box-shadow:0 0 0 3px rgba(180,35,24,.12)}
+.two{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.err{font-size:12px;color:var(--danger);display:flex;gap:6px;align-items:center}
+.err[hidden]{display:none}
+
+/* module shell */
+.module{padding:clamp(16px,1.8vw,24px)}
+.mod-block + .mod-block{margin-top:clamp(18px,2vw,26px);padding-top:clamp(18px,2vw,26px);border-top:1px solid var(--line)}
+.mod-title{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px}
+.mod-title h4{font-size:14px;font-weight:650;letter-spacing:-.01em}
+.mod-title span{font-size:12px;color:var(--muted)}
+.form-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.form-row .field-wide{grid-column:span 2}
+
+/* rows / table */
+.rows{border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.row{
+  display:grid;grid-template-columns:minmax(0,1fr) 110px 92px 110px auto;
+  gap:12px;align-items:center;padding:11px 13px;border-bottom:1px solid var(--line);
+  background:#fff;min-width:0;
+}
+.row:last-child{border-bottom:0}
+.row-head{background:var(--soft);font-family:var(--mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);padding:8px 13px}
+.row-main{min-width:0}
+.row-main strong{display:block;font-size:14px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.row-main span{font-size:12px;color:var(--muted);display:block;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.num{font-variant-numeric:tabular-nums;font-size:14px;font-weight:600;text-align:right}
+.num small{display:block;font-weight:400;font-size:11px;color:var(--muted)}
+.status{width:100%;min-height:32px;padding:4px 8px;font-size:12px;border-radius:4px}
+.row-act{display:flex;gap:6px;justify-content:flex-end}
+.empty{padding:22px 16px;text-align:center;color:var(--muted);font-size:14px}
+.empty strong{display:block;color:var(--ink);margin-bottom:4px;font-size:15px}
+
+/* clients chips */
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
+.chip{
+  display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:5px 10px;
+  border:1px solid var(--line);border-radius:999px;background:#fff;color:var(--ink-2);min-width:0;
+}
+.chip b{font-weight:600}
+.chip span{color:var(--muted-2);font-size:11px}
+
+/* quote */
+.quote-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(18px,2.4vw,32px)}
+.quote-out{display:grid;gap:14px;align-content:start}
+.quote-main{border:1px solid var(--accent);background:var(--accent-soft);border-radius:var(--r);padding:16px 18px}
+.quote-main .label{font-size:12px;color:var(--accent);font-weight:600;letter-spacing:.04em;margin-bottom:6px}
+.quote-main .value{font-size:clamp(30px,3.6vw,44px);font-weight:650;letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.quote-main .sub{font-size:12px;color:var(--muted);margin-top:8px}
+.tiers{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.tier{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;background:#fff}
+.tier h5{font-size:12px;color:var(--muted);font-weight:600;margin-bottom:6px}
+.tier .v{font-size:16px;font-weight:650;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.tier .h{font-size:11px;color:var(--muted-2);margin-top:3px;font-variant-numeric:tabular-nums}
+.instal{display:flex;flex-wrap:wrap;gap:8px}
+.instal div{flex:1 1 30%;min-width:120px;border:1px dashed var(--line-strong);border-radius:var(--r);padding:8px 11px}
+.instal .k{font-size:11px;color:var(--muted);margin-bottom:3px}
+.instal .v{font-size:15px;font-weight:600;font-variant-numeric:tabular-nums}
+
+/* plan */
+.plan-grid{display:grid;grid-template-columns:minmax(0,5fr) minmax(0,7fr);gap:clamp(18px,2.4vw,32px)}
+.plan-summary{display:grid;gap:12px;align-content:start}
+.big-stat{border:1px solid var(--line);border-radius:var(--r);padding:14px 16px;background:var(--soft-2)}
+.big-stat .k{font-size:12px;color:var(--muted);margin-bottom:6px}
+.big-stat .v{font-size:clamp(26px,3vw,34px);font-weight:650;letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.big-stat .v small{font-size:13px;font-weight:500;color:var(--muted);margin-left:4px}
+.mini-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden}
+.mini-stats div{background:#fff;padding:10px 12px}
+.mini-stats .k{font-size:11px;color:var(--muted);margin-bottom:4px}
+.mini-stats .v{font-size:16px;font-weight:600;font-variant-numeric:tabular-nums}
+.progress{height:6px;background:#EDEFF3;border-radius:999px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--accent);transition:width .2s}
+.tasks{display:grid;gap:6px;max-height:360px;overflow:auto;padding-right:4px}
+.task{display:flex;gap:10px;align-items:flex-start;padding:8px 10px;border:1px solid var(--line);border-radius:var(--r);background:#fff;font-size:13px}
+.task input{margin-top:3px;width:16px;height:16px;accent-color:var(--accent);flex:none}
+.task.done span{color:var(--muted-2);text-decoration:line-through}
+.task .wk{font-family:var(--mono);font-size:10px;color:var(--accent);background:var(--accent-soft);padding:2px 6px;border-radius:4px;flex:none;margin-top:2px}
+
+/* boundaries */
+.bounds{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(18px,2.4vw,32px)}
+.bound-card{border:1px solid var(--line);border-radius:var(--r-lg);padding:clamp(16px,1.8vw,22px);background:#fff}
+.bound-card h3{font-size:15px;font-weight:650;margin-bottom:10px}
+.bound-card ul{display:grid;gap:8px}
+.bound-card li{font-size:14px;color:var(--ink-2);padding-left:14px;position:relative;line-height:1.55}
+.bound-card li::before{content:"";position:absolute;left:0;top:9px;width:5px;height:5px;border-radius:50%;background:var(--line-strong)}
+.bound-card li b{font-weight:600;color:var(--ink)}
+.rt{width:100%;border-collapse:collapse;margin-top:clamp(20px,2.4vw,28px);font-size:14px}
+.rt caption{text-align:left;font-size:15px;font-weight:650;padding-bottom:10px}
+.rt th,.rt td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+.rt th{font-size:12px;font-family:var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--muted);font-weight:500;background:var(--soft)}
+.rt td:first-child{font-weight:600;white-space:nowrap}
+.states{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px;margin-top:18px}
+.state-item{border:1px solid var(--line);border-radius:var(--r);padding:10px 12px;font-size:13px;background:#fff}
+.state-item b{display:block;font-size:12px;font-family:var(--mono);letter-spacing:.05em;color:var(--muted);margin-bottom:4px;text-transform:uppercase}
+.state-item.ok{border-color:#CFE5DF;background:var(--accent-soft)}
+
+/* section 7 */
+.final{padding:clamp(46px,6vw,86px) 0;border-top:1px solid var(--line);background:var(--soft-2)}
+.final-grid{display:grid;grid-template-columns:minmax(0,6fr) minmax(0,6fr);gap:clamp(22px,3vw,42px);align-items:start}
+.data-tools{display:grid;gap:10px}
+.tool-row{display:flex;flex-wrap:wrap;gap:8px}
+.foot{border-top:1px solid var(--line);padding:26px 0 40px;background:#fff}
+.foot-in{display:flex;flex-wrap:wrap;gap:16px 32px;align-items:flex-start;justify-content:space-between}
+.foot p{font-size:12px;color:var(--muted-2);max-width:60ch}
+.foot-links{display:flex;flex-wrap:wrap;gap:14px;font-size:13px}
+.foot-links a{color:var(--muted)}
+.foot-links a:hover{color:var(--accent)}
+
+/* toast */
+#toast{
+  position:fixed;left:50%;bottom:24px;transform:translate(-50%,14px);z-index:60;
+  display:flex;flex-direction:column;gap:8px;align-items:center;pointer-events:none;
+  width:min(92vw,420px);
+}
+.toast{
+  background:var(--ink);color:#fff;font-size:13px;padding:10px 16px;border-radius:var(--r);
+  opacity:0;transform:translateY(6px);transition:opacity .2s,transform .2s;
+  max-width:100%;text-align:center;
+}
+.toast.show{opacity:1;transform:none}
+.toast.is-error{background:var(--danger)}
+.toast.is-ok{background:var(--accent)}
+
+/* dialog */
+dialog{
+  border:1px solid var(--line-strong);border-radius:var(--r-lg);padding:0;max-width:420px;width:92vw;
+  color:var(--ink);background:#fff;
+}
+dialog::backdrop{background:rgba(14,17,22,.32)}
+.dlg-in{padding:22px}
+.dlg-in h2{font-size:17px;font-weight:650;margin-bottom:8px}
+.dlg-in p{font-size:14px;color:var(--muted);line-height:1.6}
+.dlg-act{display:flex;gap:10px;justify-content:flex-end;margin-top:20px}
+
+.sr-only{
+  position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;
+  clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.noscript{
+  background:var(--warn-soft);border:1px solid #F2DFB8;color:var(--warn);
+  padding:12px 16px;border-radius:var(--r);font-size:14px;margin:16px auto;max-width:var(--container);
+}
+
+/* responsive */
+@media (max-width:1100px){
+  .hero-grid,.calc,.quote-grid,.plan-grid,.final-grid{grid-template-columns:minmax(0,1fr)}
+  .calc-form{border-right:0;border-bottom:1px solid var(--line)}
+  .hero-grid{gap:32px}
+  .form-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .form-row .field-wide{grid-column:span 2}
+}
+@media (max-width:900px){
+  .nav{display:none}
+  .top-in{gap:12px}
+  .brand-text em{display:none}
+  .bounds{grid-template-columns:minmax(0,1fr)}
+  .kpis{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media (max-width:720px){
+  .row{grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:8px 12px;padding:12px}
+  .row-head{display:none}
+  .row-main{grid-column:1/-1}
+  .num{text-align:left}
+  .num small{display:inline;margin-left:4px}
+  .row-act{grid-column:1/-1;justify-content:flex-start;margin-top:2px}
+  .row .status{min-height:38px}
+  .tiers{grid-template-columns:minmax(0,1fr);gap:8px}
+  .mini-stats{grid-template-columns:minmax(0,1fr)}
+  .rt,.rt tbody,.rt tr,.rt td{display:block;width:100%}
+  .rt thead{display:none}
+  .rt tr{border:1px solid var(--line);border-radius:var(--r);margin-bottom:10px;padding:4px 0}
+  .rt td{border-bottom:0;padding:6px 12px}
+  .rt td:first-child{background:var(--soft);font-size:13px}
+  .rt td::before{content:attr(data-label) "：";color:var(--muted);font-size:12px}
+  .rt td:first-child::before{content:""}
+  .hero-actions .btn{flex:1 1 100%}
+  .two{grid-template-columns:minmax(0,1fr)}
+  .form-row{grid-template-columns:minmax(0,1fr)}
+  .form-row .field-wide{grid-column:auto}
+  .foot-in{flex-direction:column}
+}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition-duration:0s !important;animation-duration:0s !important}
+}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">跳到主内容</a>
+
+<header class="top">
+  <div class="wrap top-in">
+    <a class="brand" href="#main">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-text"><strong>Solo OS</strong><em>一人公司经营作战室</em></span>
+    </a>
+    <nav class="nav" aria-label="页面章节">
+      <a href="#stage-index">四道关</a>
+      <a href="#stage-1">归档</a>
+      <a href="#stage-2">定价</a>
+      <a href="#stage-3">排期</a>
+      <a href="#stage-4">回款</a>
+      <a href="#boundaries">边界</a>
+    </nav>
+    <div class="top-actions">
+      <span class="pill pill-muted" id="demoPill" hidden>示例数据</span>
+      <button class="btn btn-primary btn-sm" id="btnDemo" type="button">载入示例数据</button>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+  <!-- 1 对象与结果 -->
+  <section class="hero" data-composition-section="1">
+    <div class="wrap hero-grid">
+      <div class="hero-copy">
+        <p class="eyebrow">OPC · One Person Company</p>
+        <h1>一个人的公司，<br>也要有经营系统</h1>
+        <p class="lede">客户、报价、交付、回款如果散在微信和表格里，你永远不知道自己到底赚没赚钱。Solo OS 把这条链子收进一张桌面：<b>录一次，四处自动算</b>。</p>
+        <div class="hero-actions">
+          <button class="btn btn-primary btn-lg" id="btnStart" type="button">开始录入第一单</button>
+          <a class="btn btn-ghost btn-lg" href="#stage-2">看报价怎么算</a>
+        </div>
+        <p class="hero-note">单文件离线运行，数据只存在你自己的浏览器里，不上传任何服务器。</p>
+        <ul class="hero-points">
+          <li><span class="tick" aria-hidden="true">✓</span><span>项目金额与工时一录入，有效时薪与应收立刻算出来</span></li>
+          <li><span class="tick" aria-hidden="true">✓</span><span>报价不再是拍脑袋：成本、风险、利润率三档报价可核对</span></li>
+          <li><span class="tick" aria-hidden="true">✓</span><span>把营收目标倒推成每周线索、报价与交付动作</span></li>
+        </ul>
+      </div>
+
+      <div class="panel cockpit" aria-labelledby="cockpitTitle">
+        <div class="panel-head">
+          <h2 id="cockpitTitle">经营驾驶舱</h2>
+          <span class="mono">实时 · 本地计算</span>
+        </div>
+        <dl class="kpis" id="kpis">
+          <div class="kpi"><dt>已回款（累计）</dt><dd id="kReceived">¥0</dd></div>
+          <div class="kpi"><dt>应收未收</dt><dd id="kReceivable">¥0</dd></div>
+          <div class="kpi"><dt>在办项目</dt><dd id="kActive">0 <small>个</small></dd></div>
+          <div class="kpi" id="kHourlyWrap"><dt>有效时薪</dt><dd id="kHourly">¥0<small>/h</small></dd></div>
+        </dl>
+        <div class="chart-block">
+          <div class="chart-head"><span>未来 8 周应收</span><span class="mono" id="chartTotal">合计 ¥0</span></div>
+          <div class="chart-wrap" style="position:relative">
+            <div class="bars" id="chart" role="img" aria-label="未来 8 周应收柱状图"></div>
+            <div class="bars-empty" id="chartEmpty">暂无应收，录入带交付日的项目后出现</div>
+          </div>
+          <div class="xlabels" aria-hidden="true">
+            <span>W1</span><span>W2</span><span>W3</span><span>W4</span>
+            <span>W5</span><span>W6</span><span>W7</span><span>W8</span>
+          </div>
+        </div>
+        <div class="cockpit-foot" id="cockpitAlert"></div>
+      </div>
+    </div>
+    <div class="wrap hero-next">下一节：一笔单子到底赚多少 · 3 个数字算清楚</div>
+  </section>
+
+  <!-- 2 可得结果 -->
+  <section class="band" id="result" data-composition-section="2">
+    <div class="wrap">
+      <div class="band-head">
+        <p class="eyebrow">一个真实动作</p>
+        <h2>先看清一笔单子到底赚多少</h2>
+        <p class="lede">报价时凭感觉估工时，交付时才发现超支——这是个体接单最常见的一笔亏损。把三个数字填进去，实际时薪和“应该报多少”立刻出来。下面的数值是示例，改一个数字就重算。</p>
+      </div>
+
+      <div class="calc panel">
+        <form class="calc-form form" id="calcForm" novalidate>
+          <div class="field">
+            <label for="cAmount">报价金额 <span class="hint">（税前，不含平台抽成）</span></label>
+            <input class="input" id="cAmount" name="amount" type="number" min="0" step="100" value="24000" inputmode="numeric">
+          </div>
+          <div class="two">
+            <div class="field">
+              <label for="cQuoted">报价时估的工时 <span class="hint">小时</span></label>
+              <input class="input" id="cQuoted" name="quoted" type="number" min="0" step="1" value="60" inputmode="numeric">
+            </div>
+            <div class="field">
+              <label for="cActual">实际投入工时 <span class="hint">小时</span></label>
+              <input class="input" id="cActual" name="actual" type="number" min="0" step="1" value="92" inputmode="numeric">
+            </div>
+          </div>
+          <div class="field">
+            <label for="cTarget">你的目标时薪 <span class="hint">（会同步到报价台）</span></label>
+            <input class="input" id="cTarget" name="target" type="number" min="0" step="10" value="400" inputmode="numeric">
+          </div>
+          <p class="err" id="calcErr" hidden><span aria-hidden="true">!</span><span id="calcErrText"></span></p>
+          <p class="hint" style="font-size:12px;color:var(--muted-2);margin:0">口径：报价时薪 = 报价金额 ÷ 报价工时；实际时薪 = 报价金额 ÷ 实际工时。</p>
+        </form>
+
+        <div class="calc-out" aria-live="polite">
+          <div class="readout">
+            <strong id="rActualRate">¥261</strong>
+            <span>实际时薪 <span class="mono" id="rQuotedRate">报价 ¥400/h</span></span>
+          </div>
+          <div class="gapbar" id="gapbar" role="img" aria-label="实际时薪保持在报价时薪的比例">
+            <i class="kept" style="width:65%"></i><i class="lost" style="width:35%"></i>
+          </div>
+          <p class="calc-note" id="calcNote">按你的目标时薪 ¥400 计算，这笔 ¥24,000 的单子应该报 <b>¥36,800</b>；否则就要把范围压到 60 小时以内。</p>
+          <div class="formula" id="calcFormula">实际时薪 = 24000 ÷ 92 = 260.9 ／ 目标时薪 400 ／ 差额 = 400 × 92 − 24000 = 12,800</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 工作流阶段 -->
+  <section class="band band-soft" id="stage-index" data-composition-section="3">
+    <div class="wrap">
+      <div class="band-head">
+        <p class="eyebrow">四道关 · 一条链</p>
+        <h2>一个人的公司，只有四道关</h2>
+        <p class="lede">阶段顺序来自真实的接单流程：先把客户和项目归档，再定价，再排期交付，最后回款复盘。Solo OS 不新增流程，只把每一步变成可计算的东西。</p>
+      </div>
+      <ol class="stages" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px">
+        <li class="panel" style="padding:18px">
+          <span class="stage-no">01</span>
+          <h3 style="font-size:17px;margin:8px 0 6px;font-weight:650">归档</h3>
+          <p style="font-size:14px;color:var(--muted)">客户、来源、项目金额与交付日进同一张台账，不再对着聊天记录回忆。</p>
+          <a class="stage-tag" href="#stage-1" style="text-decoration:none">能力：客户与项目台账</a>
+        </li>
+        <li class="panel" style="padding:18px">
+          <span class="stage-no">02</span>
+          <h3 style="font-size:17px;margin:8px 0 6px;font-weight:650">定价</h3>
+          <p style="font-size:14px;color:var(--muted)">用成本、风险系数与目标利润率算出保守/建议/上限三档价，附分期。</p>
+          <a class="stage-tag" href="#stage-2" style="text-decoration:none">能力：三档报价引擎</a>
+        </li>
+        <li class="panel" style="padding:18px">
+          <span class="stage-no">03</span>
+          <h3 style="font-size:17px;margin:8px 0 6px;font-weight:650">排期</h3>
+          <p style="font-size:14px;color:var(--muted)">把营收目标倒推为每周线索、报价、交付动作，变成能打勾的清单。</p>
+          <a class="stage-tag" href="#stage-3" style="text-decoration:none">能力：目标倒推作战计划</a>
+        </li>
+        <li class="panel" style="padding:18px">
+          <span class="stage-no">04</span>
+          <h3 style="font-size:17px;margin:8px 0 6px;font-weight:650">回款</h3>
+          <p style="font-size:14px;color:var(--muted)">应收按交付日排队，逾期自动标红，回款一登记，驾驶舱同步更新。</p>
+          <a class="stage-tag" href="#stage-4" style="text-decoration:none">能力：应收账龄与现金流</a>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- 4 阶段内证明：四个可操作模块 -->
+  <section class="band" id="stage-1" data-composition-section="4">
+    <div class="wrap">
+      <div class="stage-head">
+        <span class="stage-no">01</span>
+        <div>
+          <h3>归档：客户和项目先进台账</h3>
+          <p>先记人和事，再谈钱。客户带来源标签，项目带金额、预估工时和交付日——这三项决定了后面所有计算。</p>
+          <span class="stage-tag">能力 / 客户与项目台账</span>
+        </div>
+      </div>
+
+      <div class="module panel">
+        <div class="mod-block">
+          <div class="mod-title"><h4>新增客户 / 新增项目</h4><span id="countLabel">0 个客户 · 0 个项目</span></div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(16px,2vw,26px)">
+            <form class="form" id="clientForm" novalidate aria-label="新增客户">
+              <div class="field">
+                <label for="clName">客户名称</label>
+                <input class="input" id="clName" name="name" type="text" maxlength="40" placeholder="例：晨光烘焙工作室" aria-describedby="clNameErr">
+                <p class="err" id="clNameErr" hidden><span aria-hidden="true">!</span><span>请填写客户名称（最多 40 字）</span></p>
+              </div>
+              <div class="two">
+                <div class="field">
+                  <label for="clIndustry">行业</label>
+                  <input class="input" id="clIndustry" name="industry" type="text" maxlength="20" placeholder="餐饮 / 零售 / 教育">
+                </div>
+                <div class="field">
+                  <label for="clSource">来源</label>
+                  <select class="select" id="clSource" name="source">
+                    <option value="转介绍">转介绍</option>
+                    <option value="内容">内容（小红书/公众号）</option>
+                    <option value="社群">社群 / 私域</option>
+                    <option value="陌生">陌生开发</option>
+                    <option value="其他">其他</option>
+                  </select>
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit">加入台账</button>
+            </form>
+
+            <form class="form" id="projectForm" novalidate aria-label="新增项目">
+              <div class="field">
+                <label for="pjClient">所属客户</label>
+                <select class="select" id="pjClient" name="clientId"></select>
+                <p class="err" id="pjClientErr" hidden><span aria-hidden="true">!</span><span>请先新增一个客户</span></p>
+              </div>
+              <div class="two">
+                <div class="field">
+                  <label for="pjName">项目名称</label>
+                  <input class="input" id="pjName" name="name" type="text" maxlength="40" placeholder="例：门店小程序改版" aria-describedby="pjNameErr">
+                </div>
+                <div class="field">
+                  <label for="pjAmount">项目金额 <span class="hint">元</span></label>
+                  <input class="input" id="pjAmount" name="amount" type="number" min="0" step="100" placeholder="24000" inputmode="numeric">
+                </div>
+              </div>
+              <p class="err" id="pjNameErr" hidden><span aria-hidden="true">!</span><span>请填写项目名称（最多 40 字）</span></p>
+              <div class="two">
+                <div class="field">
+                  <label for="pjHours">预估工时 <span class="hint">小时</span></label>
+                  <input class="input" id="pjHours" name="hours" type="number" min="0" step="1" placeholder="60" inputmode="numeric">
+                </div>
+                <div class="field">
+                  <label for="pjDue">交付日</label>
+                  <input class="input" id="pjDue" name="dueDate" type="date">
+                </div>
+              </div>
+              <button class="btn btn-primary" type="submit">归档项目</button>
+            </form>
+          </div>
+          <div class="chips" id="clientChips" aria-label="已归档客户"></div>
+        </div>
+
+        <div class="mod-block">
+          <div class="mod-title"><h4>项目台账</h4><span>状态可改，金额与工时决定驾驶舱</span></div>
+          <div class="rows">
+            <div class="row row-head" aria-hidden="true">
+              <span>客户 / 项目</span><span class="num">金额</span><span>交付日</span><span>状态</span><span></span>
+            </div>
+            <div id="projectList"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-soft" id="stage-2" data-composition-section="4">
+    <div class="wrap">
+      <div class="stage-head">
+        <span class="stage-no">02</span>
+        <div>
+          <h3>定价：三档报价，先把成本认清楚</h3>
+          <p>有效工时 = 预估工时 ×（1 + 风险系数）；成本 = 有效工时 × 目标时薪 + 硬成本；建议价 = 成本 ÷（1 − 利润率）。公式写在下面，随时可核对。</p>
+          <span class="stage-tag">能力 / 三档报价引擎</span>
+        </div>
+      </div>
+
+      <div class="module panel">
+        <div class="quote-grid">
+          <form class="form" id="quoteForm" novalidate aria-label="报价参数">
+            <div class="two">
+              <div class="field">
+                <label for="qHours">预估工时 <span class="hint">小时</span></label>
+                <input class="input" id="qHours" name="hours" type="number" min="1" step="1" value="60" inputmode="numeric">
+              </div>
+              <div class="field">
+                <label for="qTarget">目标时薪 <span class="hint">元/小时</span></label>
+                <input class="input" id="qTarget" name="target" type="number" min="1" step="10" value="400" inputmode="numeric">
+              </div>
+            </div>
+            <div class="field">
+              <label for="qCost">硬成本 <span class="hint">（外包、素材、license、差旅）</span></label>
+              <input class="input" id="qCost" name="cost" type="number" min="0" step="100" value="0" inputmode="numeric">
+            </div>
+            <div class="two">
+              <div class="field">
+                <label for="qRisk">风险系数 <span class="hint">改动/扯皮预留</span></label>
+                <select class="select" id="qRisk" name="risk">
+                  <option value="0">0% · 需求明确</option>
+                  <option value="10">10% · 常规</option>
+                  <option value="20" selected>20% · 需求模糊</option>
+                  <option value="30">30% · 多方决策</option>
+                </select>
+              </div>
+              <div class="field">
+                <label for="qMargin">目标利润率</label>
+                <select class="select" id="qMargin" name="margin">
+                  <option value="0">0% · 打平</option>
+                  <option value="15">15% · 保守</option>
+                  <option value="25" selected>25% · 常规</option>
+                  <option value="35">35% · 高价值</option>
+                </select>
+              </div>
+            </div>
+            <p class="err" id="quoteErr" hidden><span aria-hidden="true">!</span><span>工时和目标时薪必须大于 0</span></p>
+            <div class="field">
+              <label for="qClient">按此报价新建项目 <span class="hint">（可选）</span></label>
+              <select class="select" id="qClient"></select>
+            </div>
+            <button class="btn btn-primary" id="qAdd" type="button">按建议价归档新项目</button>
+          </form>
+
+          <div class="quote-out" aria-live="polite">
+            <div class="quote-main">
+              <div class="label">建议报价</div>
+              <div class="value" id="qSuggest">¥38,400</div>
+              <div class="sub" id="qSuggestSub">折合有效工时 ¥533/h · 含 20% 风险预留与 25% 利润</div>
+            </div>
+            <div class="tiers">
+              <div class="tier"><h5>保守 · 只保成本</h5><div class="v" id="qFloor">¥34,560</div><div class="h" id="qFloorH">¥480/h</div></div>
+              <div class="tier" style="border-color:var(--accent)"><h5>建议 · 含目标利润</h5><div class="v" id="qMid">¥38,400</div><div class="h" id="qMidH">¥533/h</div></div>
+              <div class="tier"><h5>上限 · 加急/高价值</h5><div class="v" id="qCeil">¥48,000</div><div class="h" id="qCeilH">¥667/h</div></div>
+            </div>
+            <div class="instal" id="qInst"></div>
+            <div class="formula" id="qFormula"></div>
+            <p class="hint" style="font-size:12px;color:var(--muted-2);margin:0">口径：报价为税前一价制，未含税率、平台抽成与汇率；折合时薪 =（报价 − 硬成本）÷ 有效工时。</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band" id="stage-3" data-composition-section="4">
+    <div class="wrap">
+      <div class="stage-head">
+        <span class="stage-no">03</span>
+        <div>
+          <h3>排期：把营收目标倒推成每周动作</h3>
+          <p>目标不是“多赚钱”，而是每周要新增几条线索、发出几份报价、推进几单交付。全部由四则运算得出，参数可改，结果可核对。</p>
+          <span class="stage-tag">能力 / 目标倒推作战计划</span>
+        </div>
+      </div>
+
+      <div class="module panel">
+        <div class="plan-grid">
+          <form class="form" id="planForm" novalidate aria-label="经营目标">
+            <div class="two">
+              <div class="field">
+                <label for="gAmount">目标营收 <span class="hint">元</span></label>
+                <input class="input" id="gAmount" name="amount" type="number" min="1" step="1000" value="60000" inputmode="numeric">
+              </div>
+              <div class="field">
+                <label for="gWeeks">周期</label>
+                <select class="select" id="gWeeks" name="weeks">
+                  <option value="4">4 周 · 冲刺</option>
+                  <option value="8" selected>8 周 · 一个季度前段</option>
+                  <option value="12">12 周 · 整季</option>
+                </select>
+              </div>
+            </div>
+            <div class="two">
+              <div class="field">
+                <label for="gDeal">平均客单价 <span class="hint">元/单</span></label>
+                <input class="input" id="gDeal" name="deal" type="number" min="1" step="1000" value="12000" inputmode="numeric">
+              </div>
+              <div class="field">
+                <label for="gRate">线索成交率 <span class="hint">%</span></label>
+                <input class="input" id="gRate" name="rate" type="number" min="1" max="100" step="1" value="25" inputmode="numeric">
+              </div>
+            </div>
+            <div class="field">
+              <label for="gQuotes">每单需几份报价 <span class="hint">经验系数，默认 1.6</span></label>
+              <input class="input" id="gQuotes" name="quotes" type="number" min="1" max="20" step="0.1" value="1.6" inputmode="decimal">
+            </div>
+            <p class="err" id="planErr" hidden><span aria-hidden="true">!</span><span>请填写大于 0 的目标营收与客单价</span></p>
+            <button class="btn btn-primary" type="submit">生成作战计划</button>
+          </form>
+
+          <div class="plan-summary" aria-live="polite">
+            <div class="big-stat">
+              <div class="k">每周必须新增线索</div>
+              <div class="v" id="planLeadsWeek">4<small>条 / 周</small></div>
+            </div>
+            <div class="mini-stats">
+              <div><div class="k">需成交</div><div class="v" id="planDeals">5 单</div></div>
+              <div><div class="k">需线索</div><div class="v" id="planLeads">20 条</div></div>
+              <div><div class="k">每周报价</div><div class="v" id="planQuotesWk">1 份</div></div>
+            </div>
+            <div>
+              <div style="display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px">
+                <span style="font-size:13px;color:var(--muted)">任务完成度</span>
+                <span class="mono" id="planProgressText">0 / 0</span>
+              </div>
+              <div class="progress" role="img" aria-labelledby="planProgressText"><i id="planProgressBar" style="width:0%"></i></div>
+            </div>
+            <div class="formula" id="planFormula"></div>
+            <div>
+              <div class="mod-title" style="margin-bottom:8px"><h4>任务清单</h4><span id="planWeekLabel">尚未生成</span></div>
+              <div class="tasks" id="taskList"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-soft" id="stage-4" data-composition-section="4">
+    <div class="wrap">
+      <div class="stage-head">
+        <span class="stage-no">04</span>
+        <div>
+          <h3>回款：应收按交付日排队</h3>
+          <p>没到账的都不算收入。这里只列还有余额的项目，按交付日排序；逾期自动标红，登记回款后驾驶舱同步更新。</p>
+          <span class="stage-tag">能力 / 应收账龄与现金流</span>
+        </div>
+      </div>
+
+      <div class="module panel">
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);border-radius:var(--r);overflow:hidden;margin-bottom:18px">
+          <div style="background:#fff;padding:12px 14px"><div class="k" style="font-size:12px;color:var(--muted);margin-bottom:4px">应收合计</div><div id="recvTotal" style="font-size:20px;font-weight:650;font-variant-numeric:tabular-nums">¥0</div></div>
+          <div style="background:#fff;padding:12px 14px"><div style="font-size:12px;color:var(--muted);margin-bottom:4px">其中逾期</div><div id="recvOverdue" style="font-size:20px;font-weight:650;font-variant-numeric:tabular-nums;color:var(--danger)">¥0</div></div>
+          <div style="background:#fff;padding:12px 14px"><div style="font-size:12px;color:var(--muted);margin-bottom:4px">回款率</div><div id="recvRate" style="font-size:20px;font-weight:650;font-variant-numeric:tabular-nums">—</div></div>
+        </div>
+        <div class="rows">
+          <div class="row row-head" aria-hidden="true">
+            <span>客户 / 项目</span><span class="num">应收</span><span>账龄</span><span>登记回款</span><span></span>
+          </div>
+          <div id="recvList"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 边界与失败 -->
+  <section class="band" id="boundaries" data-composition-section="5">
+    <div class="wrap">
+      <div class="band-head">
+        <p class="eyebrow">边界 · 失败 · 恢复</p>
+        <h2>它管什么，不管什么</h2>
+        <p class="lede">一个诚实的工具应该先说清楚边界。下面这些不是免责声明，而是你决定要不要用它之前必须知道的事。</p>
+      </div>
+
+      <div class="bounds">
+        <div class="bound-card">
+          <h3>适用对象</h3>
+          <ul>
+            <li><b>1–3 人的个体经营体</b>：自由职业者、小微工作室、副业接单者、个人咨询顾问。</li>
+            <li>项目制、金额可估、交付日明确的活。</li>
+            <li>已在用微信 + 表格管理客户，但开始记不清谁欠你钱的人。</li>
+          </ul>
+        </div>
+        <div class="bound-card">
+          <h3>不适用</h3>
+          <ul>
+            <li>需要多人协作、审批权限与账号体系的团队（本作品无后端账号系统）。</li>
+            <li>需要发票、税务、银行对账的财务合规场景。</li>
+            <li>按人天计费的长期外包，或需要工时打卡核算的团队。</li>
+          </ul>
+        </div>
+        <div class="bound-card">
+          <h3>计算口径与限制</h3>
+          <ul>
+            <li>报价为<b>税前一价制</b>，未含税率、平台抽成、汇率波动。</li>
+            <li>有效时薪 = 已回款累计 ÷ 累计预估工时，是近似值，不等同会计口径。</li>
+            <li>未来 8 周应收按<b>交付日</b>分桶，不代表实际到账日。</li>
+            <li>作战计划是<b>规则推演</b>（四则运算 + 经验系数），不是大模型生成；每个中间量都在页面上可核对。</li>
+          </ul>
+        </div>
+        <div class="bound-card">
+          <h3>数据边界</h3>
+          <ul>
+            <li>数据保存在当前浏览器的 localStorage，<b>不上传、不同步</b>。</li>
+            <li>换浏览器、换设备、清缓存、无痕模式关闭后，数据会消失。</li>
+            <li>唯一的安全做法：定期「导出备份」，需要时「导入备份」。</li>
+          </ul>
+        </div>
+      </div>
+
+      <table class="rt">
+        <caption>失败与恢复路径</caption>
+        <thead>
+          <tr><th scope="col">情况</th><th scope="col">页面表现</th><th scope="col">恢复路径</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td data-label="情况">浏览器清缓存 / 换设备</td>
+            <td data-label="表现">台账为空，驾驶舱显示 ¥0</td>
+            <td data-label="恢复">先用「导出备份」，在新设备「导入备份」即可恢复全部数据。</td>
+          </tr>
+          <tr>
+            <td data-label="情况">导入文件格式不对</td>
+            <td data-label="表现">底部提示“不是有效的备份文件”，原数据不变</td>
+            <td data-label="恢复">确认选择的是本应用导出的 .json，重新选择；失败不会覆盖已有数据。</td>
+          </tr>
+          <tr>
+            <td data-label="情况">误删客户或项目</td>
+            <td data-label="表现">删除前弹出确认对话框，取消即无变化</td>
+            <td data-label="恢复">确认删除后无撤销，建议在批量整理前先导出一次备份。</td>
+          </tr>
+          <tr>
+            <td data-label="情况">交付日已过仍未收款</td>
+            <td data-label="表现">回款列表标记「逾期 N 天」，驾驶舱给出提醒</td>
+            <td data-label="恢复">登记部分回款，或回到台账把交付日改为新的约定日期。</td>
+          </tr>
+          <tr>
+            <td data-label="情况">浏览器存储被禁用</td>
+            <td data-label="表现">保存时提示“存储不可用”，本页数据仍在</td>
+            <td data-label="恢复">改用正常窗口或允许站点存储；或立刻导出备份，避免关闭页面后丢失。</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <h3 style="font-size:15px;margin-top:clamp(24px,3vw,34px);margin-bottom:4px">页面状态覆盖</h3>
+      <div class="states">
+        <div class="state-item ok"><b>已实现</b>空状态：台账/任务为空时给出下一步入口</div>
+        <div class="state-item ok"><b>已实现</b>错误状态：表单校验、导入失败、非法数字</div>
+        <div class="state-item ok"><b>已实现</b>禁用状态：无客户时归档按钮不可用并说明原因</div>
+        <div class="state-item"><b>不适用</b>加载状态：纯本地计算，无网络请求</div>
+        <div class="state-item"><b>不适用</b>权限状态：无账号与角色模型</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 行动与支持（6 企业约束已省略，原因记录在页面合同中） -->
+  <section class="final" id="action" data-composition-section="7">
+    <div class="wrap final-grid">
+      <div>
+        <h2 style="font-size:clamp(24px,2.4vw,34px);letter-spacing:-.02em;margin-bottom:12px">从第一笔单子开始</h2>
+        <p class="lede">不用注册、不用等审核，打开就能用。先录一个客户，或者载入示例数据把四个模块都摸一遍，再清空换成你自己的。</p>
+        <div class="hero-actions" style="margin-top:22px">
+          <button class="btn btn-primary btn-lg" id="btnStart2" type="button">开始录入第一单</button>
+          <a class="btn btn-ghost btn-lg" href="#stage-3">生成一份作战计划</a>
+        </div>
+        <p class="hero-note" style="margin-top:14px">示例数据均为虚构，仅用于演示；替换为自己的数据后，所有指标会重新计算。</p>
+      </div>
+      <div class="data-tools panel" style="padding:clamp(16px,1.8vw,22px)">
+        <div class="mod-title" style="margin-bottom:10px"><h4>数据与备份</h4><span id="storageState">本地存储 · 正常</span></div>
+        <div class="tool-row">
+          <button class="btn btn-ghost btn-sm" id="btnExport" type="button">导出备份 (.json)</button>
+          <button class="btn btn-ghost btn-sm" id="btnImport" type="button">导入备份</button>
+          <button class="btn btn-danger btn-sm" id="btnClear" type="button">清空全部数据</button>
+        </div>
+        <input type="file" id="fileInput" accept="application/json,.json" class="sr-only" tabindex="-1" aria-hidden="true">
+        <div class="formula" id="stateSummary" style="margin-top:12px">0 个客户 · 0 个项目 · 0 条任务</div>
+        <p class="hint" style="font-size:12px;color:var(--muted-2);margin-top:10px;line-height:1.6">
+          备份文件是本应用生成的 JSON，包含客户、项目、任务与目标参数；不含任何账号信息，因为本应用没有账号。
+        </p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div>
+      <div class="brand" style="margin-bottom:10px">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span class="brand-text"><strong>Solo OS</strong><em>v1.0</em></span>
+      </div>
+      <p>一人公司经营作战室 · 单文件离线运行，无网络依赖。第九届传智杯大学生数智创新与AI应用大赛「AI 应用生成挑战赛」参赛作品。页面内客户、金额与任务均为虚构演示数据。</p>
+    </div>
+    <nav class="foot-links" aria-label="产品地图">
+      <a href="#stage-index">四道关</a>
+      <a href="#stage-1">归档</a>
+      <a href="#stage-2">定价</a>
+      <a href="#stage-3">排期</a>
+      <a href="#stage-4">回款</a>
+      <a href="#boundaries">边界</a>
+      <a href="#action">数据与备份</a>
+    </nav>
+  </div>
+</footer>
+
+<div id="toast" role="status" aria-live="polite" aria-atomic="false"></div>
+
+<dialog id="confirmDlg" aria-labelledby="dlgTitle" aria-describedby="dlgDesc">
+  <form method="dialog" class="dlg-in">
+    <h2 id="dlgTitle">确认删除</h2>
+    <p id="dlgDesc">删除后无法撤销。</p>
+    <div class="dlg-act">
+      <button class="btn btn-ghost" value="cancel" type="submit">取消</button>
+      <button class="btn btn-danger" value="ok" id="dlgOk" type="submit">确认删除</button>
+    </div>
+  </form>
+</dialog>
+
+<noscript>
+  <div class="noscript wrap">本应用需要 JavaScript 才能计算与保存数据。启用 JavaScript 后可正常使用；页面结构、四个阶段说明与边界说明仍可阅读。</div>
+</noscript>
+
+<script>
+(function () {
+  "use strict";
+
+  var KEY = "solo-os:v1";
+  var $ = function (s, r) { return (r || document).querySelector(s); };
+  var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
+
+  var STATUS = {
+    lead: "洽谈中",
+    quoted: "已报价",
+    doing: "进行中",
+    review: "待验收",
+    done: "已结项"
+  };
+  var OPEN_STATUS = ["quoted", "doing", "review"];
+
+  /* ---------- 数据 ---------- */
+  function blank() {
+    return {
+      meta: { demo: false, v: 1 },
+      profile: { targetHourly: 400 },
+      clients: [],
+      projects: [],
+      tasks: [],
+      plan: { amount: 60000, weeks: 8, deal: 12000, rate: 25, quotes: 1.6, generatedAt: null }
+    };
+  }
+
+  function normalize(raw) {
+    var s = blank();
+    if (!raw || typeof raw !== "object") return s;
+    if (raw.profile && isFinite(raw.profile.targetHourly)) s.profile.targetHourly = Math.max(1, +raw.profile.targetHourly);
+    if (Array.isArray(raw.clients)) {
+      s.clients = raw.clients.filter(function (c) { return c && c.id && c.name; }).map(function (c) {
+        return { id: String(c.id), name: String(c.name).slice(0, 40), industry: String(c.industry || "").slice(0, 20), source: String(c.source || "其他") };
+      });
+    }
+    var ids = {};
+    s.clients.forEach(function (c) { ids[c.id] = true; });
+    if (Array.isArray(raw.projects)) {
+      s.projects = raw.projects.filter(function (p) {
+        return p && p.id && p.name && ids[p.clientId];
+      }).map(function (p) {
+        var st = STATUS[p.status] ? p.status : "quoting";
+        if (!STATUS[st]) st = "lead";
+        return {
+          id: String(p.id),
+          clientId: String(p.clientId),
+          name: String(p.name).slice(0, 40),
+          amount: Math.max(0, +p.amount || 0),
+          hours: Math.max(0, +p.hours || 0),
+          received: Math.max(0, +p.received || 0),
+          status: st,
+          dueDate: /^\d{4}-\d{2}-\d{2}$/.test(p.dueDate || "") ? p.dueDate : ""
+        };
+      });
+    }
+    if (Array.isArray(raw.tasks)) {
+      s.tasks = raw.tasks.filter(function (t) { return t && t.id && t.title; }).map(function (t) {
+        return { id: String(t.id), week: Math.max(1, +t.week || 1), title: String(t.title).slice(0, 60), done: !!t.done };
+      });
+    }
+    if (raw.plan && typeof raw.plan === "object") {
+      ["amount", "deal", "rate", "quotes"].forEach(function (k) {
+        if (isFinite(raw.plan[k]) && +raw.plan[k] > 0) s.plan[k] = +raw.plan[k];
+      });
+      if ([4, 8, 12].indexOf(+raw.plan.weeks) >= 0) s.plan.weeks = +raw.plan.weeks;
+      s.plan.generatedAt = raw.plan.generatedAt || null;
+    }
+    s.meta.demo = !!(raw.meta && raw.meta.demo);
+    return s;
+  }
+
+  var storageOK = true;
+  var state = blank();
+
+  function load() {
+    try {
+      var raw = window.localStorage.getItem(KEY);
+      if (!raw) return blank();
+      return normalize(JSON.parse(raw));
+    } catch (e) {
+      return blank();
+    }
+  }
+
+  function save() {
+    try {
+      window.localStorage.setItem(KEY, JSON.stringify(state));
+      return true;
+    } catch (e) {
+      storageOK = false;
+      toast("浏览器存储不可用，本次数据只在本页有效，请立刻导出备份", "error");
+      renderStorageState();
+      return false;
+    }
+  }
+
+  /* ---------- 工具 ---------- */
+  function uid() {
+    if (window.crypto && window.crypto.randomUUID) return window.crypto.randomUUID();
+    return "id-" + Date.now().toString(36) + "-" + Math.random().toString(36).slice(2, 9);
+  }
+  function money(n) {
+    var v = Math.round(+n || 0);
+    return "¥" + v.toLocaleString("zh-CN");
+  }
+  function num(n, d) {
+    var v = +n || 0;
+    return v.toLocaleString("zh-CN", { maximumFractionDigits: d === undefined ? 0 : d, minimumFractionDigits: 0 });
+  }
+  function todayISO() {
+    var d = new Date();
+    var m = String(d.getMonth() + 1).padStart(2, "0");
+    var day = String(d.getDate()).padStart(2, "0");
+    return d.getFullYear() + "-" + m + "-" + day;
+  }
+  function daysBetween(aISO, bISO) {
+    var a = new Date(aISO + "T00:00:00");
+    var b = new Date(bISO + "T00:00:00");
+    return Math.round((b - a) / 86400000);
+  }
+  function shortDate(iso) {
+    if (!iso) return "未设";
+    var p = iso.split("-");
+    return p[1] + "/" + p[2];
+  }
+  function clientName(id) {
+    for (var i = 0; i < state.clients.length; i++) if (state.clients[i].id === id) return state.clients[i].name;
+    return "未知客户";
+  }
+  function toast(msg, kind) {
+    var host = $("#toast");
+    if (!host) return;
+    var el = document.createElement("div");
+    el.className = "toast" + (kind === "error" ? " is-error" : kind === "ok" ? " is-ok" : "");
+    el.textContent = msg;
+    host.appendChild(el);
+    setTimeout(function () { el.classList.add("show"); }, 16);
+    setTimeout(function () {
+      el.classList.remove("show");
+      setTimeout(function () { if (el.parentNode) el.parentNode.removeChild(el); }, 260);
+    }, 3200);
+  }
+
+  /* ---------- 派生指标 ---------- */
+  function derive() {
+    var rows = state.projects;
+    var contract = 0, received = 0, hours = 0, hoursReceived = 0, active = 0, overdue = 0, overdueCount = 0;
+    var today = todayISO();
+    rows.forEach(function (p) {
+      if (p.status !== "lead") contract += p.amount;
+      received += p.received;
+      hours += p.hours;
+      if (p.received > 0) hoursReceived += p.hours;
+      if (OPEN_STATUS.indexOf(p.status) >= 0) active++;
+      var bal = Math.max(0, p.amount - p.received);
+      if (bal > 0 && p.dueDate && p.status !== "lead" && daysBetween(p.dueDate, today) > 0) {
+        overdue += bal; overdueCount++;
+      }
+    });
+    var receivable = 0;
+    rows.forEach(function (p) {
+      if (p.status !== "lead") receivable += Math.max(0, p.amount - p.received);
+    });
+    var effHourly = hoursReceived > 0 ? received / hoursReceived : 0;
+    return {
+      contract: contract, received: received, receivable: receivable,
+      active: active, hours: hours, effHourly: effHourly,
+      overdue: overdue, overdueCount: overdueCount, today: today
+    };
+  }
+
+  function buckets8() {
+    var b = [0, 0, 0, 0, 0, 0, 0, 0];
+    var today = todayISO();
+    state.projects.forEach(function (p) {
+      if (p.status === "lead") return;
+      var bal = Math.max(0, p.amount - p.received);
+      if (bal <= 0 || !p.dueDate) return;
+      var d = daysBetween(today, p.dueDate);
+      if (d < 0) return;
+      var w = Math.floor(d / 7);
+      if (w > 7) return;
+      b[w] += bal;
+    });
+    return b;
+  }
+
+  /* ---------- 渲染：驾驶舱 ---------- */
+  function renderCockpit() {
+    var d = derive();
+    $("#kReceived").textContent = money(d.received);
+    $("#kReceivable").textContent = money(d.receivable);
+    $("#kActive").innerHTML = num(d.active) + ' <small>个</small>';
+    $("#kHourly").innerHTML = money(d.effHourly) + "<small>/h</small>";
+
+    var rWrap = $("#kReceivable").parentNode;
+    rWrap.classList.toggle("is-warn", d.overdue > 0 && d.overdue === d.receivable);
+    rWrap.classList.toggle("is-danger", d.overdue > 0 && d.overdue < d.receivable);
+    var hWrap = $("#kHourlyWrap");
+    hWrap.classList.toggle("is-danger", d.effHourly > 0 && d.effHourly < state.profile.targetHourly * 0.7);
+
+    var b = buckets8();
+    var max = Math.max.apply(null, b.concat([1]));
+    var total = b.reduce(function (s, v) { return s + v; }, 0);
+    var label = "未来 8 周应收合计 " + money(total) + "；" + b.map(function (v, i) { return "第" + (i + 1) + "周 " + money(v); }).join("，");
+    var cols = b.map(function (v, i) {
+      var pct = max > 0 ? (v / max) * 100 : 0;
+      var h = v > 0 ? Math.max(4, pct) : 0;
+      return '<div class="bar-col' + (v > 0 ? "" : " is-empty") + '"><div class="bar" style="height:' + h.toFixed(1) + '%"></div></div>';
+    }).join("");
+    $("#chart").innerHTML = cols;
+    $("#chart").setAttribute("aria-label", label);
+    $("#chartEmpty").hidden = total > 0;
+    $("#chartTotal").textContent = "合计 " + money(total);
+
+    var alert = $("#cockpitAlert");
+    if (state.projects.length === 0) {
+      alert.innerHTML = '<span>还没有数据。先录一个客户和一笔单子，或者 <a href="#action">载入示例数据</a> 看看四个模块怎么联动。</span>';
+    } else if (d.overdue > 0) {
+      alert.innerHTML = '<span><strong>' + d.overdueCount + " 笔已逾期，共 " + money(d.overdue) +
+        '</strong>——先催这一笔，比再谈一个新客户更快到账。</span>';
+    } else if (d.effHourly > 0 && d.effHourly < state.profile.targetHourly) {
+      alert.innerHTML = '<span>有效时薪 ' + money(d.effHourly) + "/h 低于目标 " + money(state.profile.targetHourly) +
+        '/h：要么提价，要么压工时。</span>';
+    } else {
+      alert.innerHTML = "<span>当前没有逾期应收。下一笔应收在 " +
+        (b[0] > 0 ? "本周" : "后续 8 周") + "，合计 " + money(total) + "。</span>";
+    }
+
+    $("#demoPill").hidden = !state.meta.demo;
+    $("#btnDemo").textContent = state.meta.demo ? "重新载入示例" : "载入示例数据";
+    $("#countLabel").textContent = state.clients.length + " 个客户 · " + state.projects.length + " 个项目";
+    $("#stateSummary").textContent = state.clients.length + " 个客户 · " + state.projects.length + " 个项目 · " + state.tasks.length + " 条任务";
+  }
+
+  /* ---------- 渲染：客户 / 项目 ---------- */
+  function renderClientOptions() {
+    var opts = state.clients.map(function (c) {
+      return '<option value="' + c.id + '">' + escapeHtml(c.name) + "</option>";
+    }).join("");
+    ["#pjClient", "#qClient"].forEach(function (sel) {
+      var el = $(sel);
+      if (!el) return;
+      var prev = el.value;
+      el.innerHTML = opts || '<option value="">（还没有客户）</option>';
+      if (prev && el.querySelector('option[value="' + prev + '"]')) el.value = prev;
+    });
+    var addBtn = $("#qAdd");
+    var noClient = state.clients.length === 0;
+    addBtn.setAttribute("aria-disabled", noClient ? "true" : "false");
+    addBtn.title = noClient ? "先在阶段 01 新增一个客户" : "";
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c];
+    });
+  }
+
+  function renderClients() {
+    var host = $("#clientChips");
+    if (state.clients.length === 0) {
+      host.innerHTML = '<span class="empty-line">还没有客户。</span>';
+      return;
+    }
+    host.innerHTML = state.clients.map(function (c) {
+      return '<span class="chip"><b>' + escapeHtml(c.name) + "</b><span>" +
+        escapeHtml(c.source) + (c.industry ? " · " + escapeHtml(c.industry) : "") + "</span></span>";
+    }).join("");
+  }
+
+  function renderProjects() {
+    var host = $("#projectList");
+    if (state.projects.length === 0) {
+      host.innerHTML = '<div class="empty"><strong>台账还是空的</strong>在左边新增一个客户，再归档一个项目；或载入示例数据先看联动。</div>';
+      return;
+    }
+    var today = todayISO();
+    host.innerHTML = state.projects.map(function (p) {
+      var bal = Math.max(0, p.amount - p.received);
+      var late = bal > 0 && p.dueDate && p.status !== "lead" && daysBetween(p.dueDate, today) > 0;
+      var opts = Object.keys(STATUS).map(function (k) {
+        return '<option value="' + k + '"' + (p.status === k ? " selected" : "") + ">" + STATUS[k] + "</option>";
+      }).join("");
+      return '<div class="row">' +
+        '<div class="row-main"><strong>' + escapeHtml(p.name) + "</strong><span>" + escapeHtml(clientName(p.clientId)) +
+        " · 预估 " + num(p.hours) + "h</span></div>" +
+        '<div class="num" data-label="金额">' + money(p.amount) + "<small>已收 " + money(p.received) + "</small></div>" +
+        '<div data-label="交付日" style="font-size:13px;font-variant-numeric:tabular-nums">' + shortDate(p.dueDate) +
+        (late ? ' <span class="pill pill-danger" style="margin-left:4px">逾期' + daysBetween(p.dueDate, today) + "天</span>" : "") + "</div>" +
+        '<div><select class="select status" data-status="' + p.id + '" aria-label="' + escapeHtml(p.name) + ' 的状态">' + opts + "</select></div>" +
+        '<div class="row-act"><button class="btn btn-quiet btn-sm" data-del="' + p.id + '" type="button">删除</button></div>' +
+        "</div>";
+    }).join("");
+  }
+
+  function renderReceivables() {
+    var rows = state.projects.map(function (p) {
+      return { p: p, bal: Math.max(0, p.amount - p.received) };
+    }).filter(function (x) { return x.bal > 0 && x.p.status !== "lead"; })
+      .sort(function (a, b) { return (a.p.dueDate || "9999") < (b.p.dueDate || "9999") ? -1 : 1; });
+
+    var total = 0, overdue = 0, contract = 0;
+    state.projects.forEach(function (p) {
+      if (p.status === "lead") return;
+      contract += p.amount;
+      var bal = Math.max(0, p.amount - p.received);
+      total += bal;
+      if (bal > 0 && p.dueDate && daysBetween(p.dueDate, todayISO()) > 0) overdue += bal;
+    });
+    $("#recvTotal").textContent = money(total);
+    $("#recvOverdue").textContent = money(overdue);
+    $("#recvRate").textContent = contract > 0 ? Math.round(((contract - total) / contract) * 100) + "%" : "—";
+
+    var host = $("#recvList");
+    if (rows.length === 0) {
+      host.innerHTML = '<div class="empty"><strong>没有待收款项</strong>所有项目的钱都收清了，或者还没有已报价的项目。</div>';
+      return;
+    }
+    host.innerHTML = rows.map(function (x) {
+      var p = x.p, bal = x.bal;
+      var late = p.dueDate && daysBetween(p.dueDate, todayISO()) > 0;
+      var ageTxt = p.dueDate ? (late ? '<span class="pill pill-danger">逾期 ' + daysBetween(p.dueDate, todayISO()) + " 天</span>" : "还有 " + daysBetween(todayISO(), p.dueDate) + " 天") : '<span class="pill pill-muted">未设交付日</span>';
+      return '<div class="row">' +
+        '<div class="row-main"><strong>' + escapeHtml(p.name) + "</strong><span>" + escapeHtml(clientName(p.clientId)) +
+        " · " + STATUS[p.status] + "</span></div>" +
+        '<div class="num" data-label="应收">' + money(bal) + "<small>共 " + money(p.amount) + "</small></div>" +
+        '<div data-label="账龄" style="font-size:13px">' + ageTxt + "</div>" +
+        '<div data-label="登记回款"><input class="input" style="min-height:34px;padding:5px 8px;font-size:13px" type="number" min="0" step="100" placeholder="' + Math.round(bal) + '" inputmode="numeric" aria-label="为 ' + escapeHtml(p.name) + ' 登记回款金额" data-recv="' + p.id + '"></div>' +
+        '<div class="row-act"><button class="btn btn-ghost btn-sm" data-recvok="' + p.id + '" type="button">登记</button></div>' +
+        "</div>";
+    }).join("");
+  }
+
+  /* ---------- 渲染：任务 ---------- */
+  function renderTasks() {
+    var host = $("#taskList");
+    var done = state.tasks.filter(function (t) { return t.done; }).length;
+    var total = state.tasks.length;
+    $("#planProgressText").textContent = done + " / " + total;
+    $("#planProgressBar").style.width = total ? Math.round((done / total) * 100) + "%" : "0%";
+    $("#planWeekLabel").textContent = total ? state.plan.weeks + " 周计划 · 已完成 " + Math.round((done / total) * 100) + "%" : "尚未生成";
+
+    if (total === 0) {
+      host.innerHTML = '<div class="empty"><strong>还没有任务清单</strong>用左边参数生成一份作战计划。</div>';
+      return;
+    }
+    host.innerHTML = state.tasks.map(function (t) {
+      return '<label class="task' + (t.done ? " done" : "") + '"><input type="checkbox" data-task="' + t.id + '"' + (t.done ? " checked" : "") + '><span class="wk">W' + t.week + "</span><span>" + escapeHtml(t.title) + "</span></label>";
+    }).join("");
+  }
+
+  /* ---------- 报价引擎 ---------- */
+  function quoteCalc() {
+    var h = Math.max(0, +$("#qHours").value || 0);
+    var target = Math.max(0, +$("#qTarget").value || 0);
+    var cost = Math.max(0, +$("#qCost").value || 0);
+    var risk = +$("#qRisk").value / 100;
+    var margin = +$("#qMargin").value / 100;
+    var effH = h * (1 + risk);
+    var base = effH * target + cost;
+    var suggest = margin < 1 ? base / (1 - margin) : base;
+    var floor = base * 1.05;
+    var ceil = suggest * 1.25;
+    return {
+      h: h, target: target, cost: cost, risk: risk, margin: margin,
+      effH: effH, base: base, suggest: suggest, floor: floor, ceil: ceil,
+      hourly: function (v) { return effH > 0 ? (v - cost) / effH : 0; }
+    };
+  }
+  function hourlyOf(v, r) { return r.effH > 0 ? (v - r.cost) / r.effH : 0; }
+
+  function renderQuote() {
+    var r = quoteCalc();
+    var valid = r.h > 0 && r.target > 0;
+    $("#quoteErr").hidden = valid;
+    ["#qHours", "#qTarget"].forEach(function (s) { $(s).setAttribute("aria-invalid", valid ? "false" : "true"); });
+    if (!valid) {
+      ["#qSuggest", "#qFloor", "#qMid", "#qCeil"].forEach(function (s) { $(s).textContent = "—"; });
+      $("#qFormula").textContent = "工时与目标时薪需大于 0 才可计算。";
+      $("#qInst").innerHTML = "";
+      return;
+    }
+    $("#qSuggest").textContent = money(r.suggest);
+    $("#qSuggestSub").textContent = "折合有效工时 " + money(hourlyOf(r.suggest, r)) + "/h · 含 " + Math.round(r.risk * 100) + "% 风险预留与 " + Math.round(r.margin * 100) + "% 利润";
+    $("#qFloor").textContent = money(r.floor);
+    $("#qFloorH").textContent = money(hourlyOf(r.floor, r)) + "/h";
+    $("#qMid").textContent = money(r.suggest);
+    $("#qMidH").textContent = money(hourlyOf(r.suggest, r)) + "/h";
+    $("#qCeil").textContent = money(r.ceil);
+    $("#qCeilH").textContent = money(hourlyOf(r.ceil, r)) + "/h";
+
+    var parts = r.suggest < 10000 ? [50, 50] : [40, 40, 20];
+    var names = r.suggest < 10000 ? ["预付", "交付"] : ["预付", "中期", "交付验收"];
+    $("#qInst").innerHTML = parts.map(function (p, i) {
+      var k = names[i] + " · " + p + "%";
+      var v = money(r.suggest * p / 100);
+      return '<div><div class="k">' + k + '</div><div class="v">' + v + "</div></div>";
+    }).join("");
+
+    $("#qFormula").textContent =
+      "有效工时 = " + num(r.h) + " × (1 + " + Math.round(r.risk * 100) + "%) = " + num(r.effH, 1) + "h\n" +
+      "成本 = " + num(r.effH, 1) + "h × " + money(r.target) + " + " + money(r.cost) + " = " + money(r.base) + "\n" +
+      "建议价 = " + money(r.base) + " ÷ (1 − " + Math.round(r.margin * 100) + "%) = " + money(r.suggest);
+  }
+
+  /* ---------- 作战计划引擎 ---------- */
+  function planCalc() {
+    var amount = Math.max(0, +$("#gAmount").value || 0);
+    var weeks = +$("#gWeeks").value;
+    var deal = Math.max(0, +$("#gDeal").value || 0);
+    var rate = Math.min(100, Math.max(1, +$("#gRate").value || 1)) / 100;
+    var coef = Math.max(1, +$("#gQuotes").value || 1.6);
+    var deals = deal > 0 ? Math.ceil(amount / deal) : 0;
+    var leads = Math.ceil(deals / rate);
+    var leadsWeek = Math.ceil(leads / weeks);
+    var quotesWeek = Math.max(1, Math.ceil((deals * coef) / weeks));
+    return { amount: amount, weeks: weeks, deal: deal, rate: rate, coef: coef, deals: deals, leads: leads, leadsWeek: leadsWeek, quotesWeek: quotesWeek };
+  }
+
+  function renderPlan() {
+    var p = planCalc();
+    var valid = p.amount > 0 && p.deal > 0;
+    $("#planErr").hidden = valid;
+    $("#gAmount").setAttribute("aria-invalid", valid ? "false" : "true");
+    $("#gDeal").setAttribute("aria-invalid", valid ? "false" : "true");
+    if (!valid) {
+      $("#planLeadsWeek").innerHTML = "—";
+      $("#planDeals").textContent = "—";
+      $("#planLeads").textContent = "—";
+      $("#planQuotesWk").textContent = "—";
+      $("#planFormula").textContent = "目标营收与平均客单价需大于 0 才可推演。";
+      return;
+    }
+    $("#planLeadsWeek").innerHTML = num(p.leadsWeek) + "<small>条 / 周</small>";
+    $("#planDeals").textContent = num(p.deals) + " 单";
+    $("#planLeads").textContent = num(p.leads) + " 条";
+    $("#planQuotesWk").textContent = num(p.quotesWeek) + " 份";
+    $("#planFormula").textContent =
+      "需成交 = ⌈" + money(p.amount) + " ÷ " + money(p.deal) + "⌉ = " + p.deals + " 单\n" +
+      "需线索 = ⌈" + p.deals + " ÷ " + Math.round(p.rate * 100) + "%⌉ = " + p.leads + " 条\n" +
+      "每周线索 = ⌈" + p.leads + " ÷ " + p.weeks + "⌉ = " + p.leadsWeek + " 条；每周报价 = ⌈" + p.deals + " × " + p.coef + " ÷ " + p.weeks + "⌉ = " + p.quotesWeek + " 份";
+  }
+
+  /* ---------- 工时偏差计算器 ---------- */
+  function renderCalc() {
+    var amount = Math.max(0, +$("#cAmount").value || 0);
+    var quoted = Math.max(0, +$("#cQuoted").value || 0);
+    var actual = Math.max(0, +$("#cActual").value || 0);
+    var target = Math.max(0, +$("#cTarget").value || 0);
+    var valid = quoted > 0 && actual > 0 && target > 0;
+    $("#calcErr").hidden = valid;
+    if (!valid) {
+      $("#rActualRate").textContent = "—";
+      $("#calcNote").textContent = "填写金额、报价工时、实际工时与目标时薪后才会计算。";
+      $("#calcFormula").textContent = "口径：实际时薪 = 报价金额 ÷ 实际工时。";
+      return;
+    }
+    var quotedRate = amount / quoted;
+    var actualRate = amount / actual;
+    var kept = quotedRate > 0 ? Math.min(1, actualRate / quotedRate) : 0;
+    $("#rActualRate").textContent = money(actualRate) + "/h";
+    $("#rQuotedRate").textContent = "报价 " + money(quotedRate) + "/h";
+    $("#gapbar").innerHTML = '<i class="kept" style="width:' + (kept * 100).toFixed(1) + '%"></i><i class="lost" style="width:' + ((1 - kept) * 100).toFixed(1) + '%"></i>';
+    $("#gapbar").setAttribute("aria-label", "实际时薪是报价时薪的 " + Math.round(kept * 100) + "%");
+    var need = target * actual;
+    var gap = need - amount;
+    var dropPct = Math.round((1 - kept) * 100);
+    if (gap > 0) {
+      $("#calcNote").innerHTML = "按你的目标时薪 " + money(target) + " 计算，这笔 " + money(amount) + " 的单子应该报 <b>" +
+        money(need) + "</b>（差 " + money(gap) + "）；否则就要把投入压到 " + num(amount / target, 1) + " 小时以内。实际时薪比报价时低 " + dropPct + "%。";
+    } else {
+      $("#calcNote").innerHTML = "这笔单子的实际时薪 " + money(actualRate) + "/h 已达到目标 " + money(target) + "/h，超出的 " +
+        money(-gap) + " 是这次的余量，可以留作缓冲。";
+    }
+    $("#calcFormula").textContent =
+      "实际时薪 = " + num(amount) + " ÷ " + num(actual) + " = " + num(actualRate, 1) + "\n" +
+      "目标应报 = " + num(target) + " × " + num(actual) + " = " + num(need) + "\n" +
+      "差额 = " + num(need) + " − " + num(amount) + " = " + num(gap);
+  }
+
+  /* ---------- 渲染全部 ---------- */
+  function renderStorageState() {
+    var el = $("#storageState");
+    if (!el) return;
+    el.textContent = storageOK ? "本地存储 · 正常" : "本地存储 · 不可用";
+    el.style.color = storageOK ? "" : "var(--danger)";
+  }
+
+  function renderAll() {
+    renderCockpit();
+    renderClientOptions();
+    renderClients();
+    renderProjects();
+    renderReceivables();
+    renderTasks();
+    renderQuote();
+    renderPlan();
+    renderCalc();
+    renderStorageState();
+  }
+
+  /* ---------- 示例数据 ---------- */
+  function seedDemo() {
+    var addDays = function (n) {
+      var d = new Date();
+      d.setDate(d.getDate() + n);
+      var m = String(d.getMonth() + 1).padStart(2, "0");
+      var day = String(d.getDate()).padStart(2, "0");
+      return d.getFullYear() + "-" + m + "-" + day;
+    };
+    var c1 = uid(), c2 = uid(), c3 = uid(), c4 = uid();
+    state = blank();
+    state.meta.demo = true;
+    state.profile.targetHourly = 400;
+    state.clients = [
+      { id: c1, name: "晨光烘焙工作室", industry: "餐饮", source: "转介绍" },
+      { id: c2, name: "禾木健身", industry: "健身", source: "内容（小红书/公众号）" },
+      { id: c3, name: "云清律所", industry: "专业服务", source: "转介绍" },
+      { id: c4, name: "南屿民宿", industry: "文旅", source: "社群 / 私域" }
+    ];
+    state.projects = [
+      { id: uid(), clientId: c1, name: "门店小程序改版", amount: 24000, hours: 60, received: 24000, status: "done", dueDate: addDays(-24) },
+      { id: uid(), clientId: c2, name: "会员体系页面设计", amount: 38000, hours: 96, received: 15200, status: "doing", dueDate: addDays(-6) },
+      { id: uid(), clientId: c3, name: "官网内容重构", amount: 18000, hours: 48, received: 5400, status: "review", dueDate: addDays(9) },
+      { id: uid(), clientId: c4, name: "预订页视觉升级", amount: 12000, hours: 36, received: 0, status: "quoted", dueDate: addDays(18) },
+      { id: uid(), clientId: c2, name: "线下物料延展", amount: 8600, hours: 22, received: 0, status: "lead", dueDate: "" },
+      { id: uid(), clientId: c3, name: "年度内容托管", amount: 26400, hours: 72, received: 8000, status: "doing", dueDate: addDays(38) }
+    ];
+    state.plan = { amount: 60000, weeks: 8, deal: 12000, rate: 25, quotes: 1.6, generatedAt: todayISO() };
+    state.tasks = buildTasks(60000, 8, 12000, 25, 1.6);
+    $("#gAmount").value = 60000;
+    $("#gWeeks").value = 8;
+    $("#gDeal").value = 12000;
+    $("#gRate").value = 25;
+    $("#gQuotes").value = 1.6;
+    save();
+    renderAll();
+    toast("已载入示例数据 · 4 个客户 / 6 个项目 / 24 条任务", "ok");
+  }
+
+  function buildTasks(amount, weeks, deal, rate, coef) {
+    var deals = deal > 0 ? Math.ceil(amount / deal) : 0;
+    var leads = Math.ceil(deals / (Math.min(100, Math.max(1, rate)) / 100));
+    var leadsWeek = Math.ceil(leads / weeks);
+    var quotesWeek = Math.max(1, Math.ceil((deals * Math.max(1, coef)) / weeks));
+    var tasks = [];
+    for (var w = 1; w <= weeks; w++) {
+      tasks.push({ id: uid(), week: w, title: "新增线索 " + leadsWeek + " 条（内容/社群/转介绍各 1）", done: false });
+      tasks.push({ id: uid(), week: w, title: "发出报价 " + quotesWeek + " 份并跟进 48 小时内回复", done: false });
+      tasks.push({ id: uid(), week: w, title: "推进 " + Math.max(1, Math.ceil(deals / weeks)) + " 单交付或验收，登记回款", done: false });
+    }
+    return tasks;
+  }
+
+  /* ---------- 事件 ---------- */
+  function focusClientForm() {
+    var el = $("#clName");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "center" });
+      setTimeout(function () { el.focus({ preventScroll: true }); }, 320);
+    }
+  }
+
+  function askConfirm(title, desc, onOk) {
+    var dlg = $("#confirmDlg");
+    $("#dlgTitle").textContent = title;
+    $("#dlgDesc").textContent = desc;
+    if (typeof dlg.showModal === "function") {
+      dlg.showModal();
+      var handler = function () {
+        dlg.removeEventListener("close", handler);
+        if (dlg.returnValue === "ok" && onOk) onOk();
+      };
+      dlg.addEventListener("close", handler);
+    } else {
+      if (window.confirm(title + "\n" + desc) && onOk) onOk();
+    }
+  }
+
+  function bind() {
+    $("#btnDemo").addEventListener("click", function () {
+      if (state.projects.length > 0) {
+        askConfirm("载入示例数据", "当前台账里的客户与项目会被替换为示例数据。建议先导出备份。", seedDemo);
+      } else {
+        seedDemo();
+      }
+    });
+    $("#btnStart").addEventListener("click", focusClientForm);
+    $("#btnStart2").addEventListener("click", focusClientForm);
+
+    $("#clientForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var name = $("#clName").value.trim();
+      if (!name) {
+        $("#clNameErr").hidden = false;
+        $("#clName").setAttribute("aria-invalid", "true");
+        $("#clName").focus();
+        return;
+      }
+      $("#clNameErr").hidden = true;
+      $("#clName").setAttribute("aria-invalid", "false");
+      state.clients.push({
+        id: uid(), name: name.slice(0, 40),
+        industry: $("#clIndustry").value.trim().slice(0, 20),
+        source: $("#clSource").value
+      });
+      $("#clName").value = "";
+      $("#clIndustry").value = "";
+      save(); renderAll();
+      toast("客户已归档", "ok");
+    });
+
+    $("#projectForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var cid = $("#pjClient").value;
+      if (!cid) {
+        $("#pjClientErr").hidden = false;
+        $("#pjClient").focus();
+        return;
+      }
+      $("#pjClientErr").hidden = true;
+      var name = $("#pjName").value.trim();
+      if (!name) {
+        $("#pjNameErr").hidden = false;
+        $("#pjName").setAttribute("aria-invalid", "true");
+        $("#pjName").focus();
+        return;
+      }
+      $("#pjNameErr").hidden = true;
+      $("#pjName").setAttribute("aria-invalid", "false");
+      state.projects.push({
+        id: uid(), clientId: cid, name: name.slice(0, 40),
+        amount: Math.max(0, +$("#pjAmount").value || 0),
+        hours: Math.max(0, +$("#pjHours").value || 0),
+        received: 0, status: "quoted",
+        dueDate: $("#pjDue").value || ""
+      });
+      $("#pjName").value = "";
+      $("#pjAmount").value = "";
+      $("#pjHours").value = "";
+      $("#pjDue").value = "";
+      save(); renderAll();
+      toast("项目已归档 · 报价阶段", "ok");
+    });
+
+    $("#projectList").addEventListener("change", function (e) {
+      var sel = e.target.closest("[data-status]");
+      if (!sel) return;
+      var id = sel.getAttribute("data-status");
+      state.projects.forEach(function (p) { if (p.id === id) p.status = sel.value; });
+      save(); renderAll();
+      toast("状态已更新为「" + STATUS[sel.value] + "」", "ok");
+    });
+    $("#projectList").addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-del]");
+      if (!btn) return;
+      var id = btn.getAttribute("data-del");
+      var p = state.projects.filter(function (x) { return x.id === id; })[0];
+      if (!p) return;
+      askConfirm("删除项目「" + p.name + "」", "删除后该项目的金额与工时不再计入驾驶舱，且无法撤销。", function () {
+        state.projects = state.projects.filter(function (x) { return x.id !== id; });
+        save(); renderAll();
+        toast("项目已删除", "ok");
+      });
+    });
+
+    ["#qHours", "#qTarget", "#qCost", "#qRisk", "#qMargin"].forEach(function (s) {
+      $(s).addEventListener("input", renderQuote);
+      $(s).addEventListener("change", renderQuote);
+    });
+
+    $("#qAdd").addEventListener("click", function () {
+      if (state.clients.length === 0) {
+        toast("先在阶段 01 新增一个客户", "error");
+        return;
+      }
+      var r = quoteCalc();
+      if (!(r.h > 0 && r.target > 0)) { toast("报价参数不完整", "error"); return; }
+      var cid = $("#qClient").value || state.clients[0].id;
+      state.projects.push({
+        id: uid(), clientId: cid, name: "按报价新增项目",
+        amount: Math.round(r.suggest), hours: Math.round(r.h),
+        received: 0, status: "quoted", dueDate: ""
+      });
+      save(); renderAll();
+      toast("已按建议价 " + money(r.suggest) + " 归档，可在阶段 01 改名称", "ok");
+    });
+
+    $("#planForm").addEventListener("submit", function (e) {
+      e.preventDefault();
+      var p = planCalc();
+      if (!(p.amount > 0 && p.deal > 0)) { toast("目标营收与客单价需大于 0", "error"); return; }
+      state.plan = { amount: p.amount, weeks: p.weeks, deal: p.deal, rate: Math.round(p.rate * 100), quotes: p.coef, generatedAt: todayISO() };
+      state.tasks = buildTasks(p.amount, p.weeks, p.deal, p.rate * 100, p.coef);
+      save(); renderAll();
+      toast("已生成 " + p.weeks + " 周作战计划 · " + state.tasks.length + " 条任务", "ok");
+    });
+    ["#gAmount", "#gWeeks", "#gDeal", "#gRate", "#gQuotes"].forEach(function (s) {
+      $(s).addEventListener("input", renderPlan);
+      $(s).addEventListener("change", renderPlan);
+    });
+
+    $("#taskList").addEventListener("change", function (e) {
+      var cb = e.target.closest("[data-task]");
+      if (!cb) return;
+      var id = cb.getAttribute("data-task");
+      state.tasks.forEach(function (t) { if (t.id === id) t.done = cb.checked; });
+      save(); renderTasks(); renderCockpit();
+    });
+
+    $("#recvList").addEventListener("click", function (e) {
+      var btn = e.target.closest("[data-recvok]");
+      if (!btn) return;
+      var id = btn.getAttribute("data-recvok");
+      var input = document.querySelector('[data-recv="' + id + '"]');
+      var v = Math.max(0, +input.value || 0);
+      if (v <= 0) { toast("请输入大于 0 的回款金额", "error"); input.focus(); return; }
+      var p = state.projects.filter(function (x) { return x.id === id; })[0];
+      if (!p) return;
+      var bal = Math.max(0, p.amount - p.received);
+      if (v > bal) v = bal;
+      p.received += v;
+      if (p.received >= p.amount) p.status = "done";
+      save(); renderAll();
+      toast("已登记回款 " + money(v), "ok");
+    });
+
+    ["#cAmount", "#cQuoted", "#cActual"].forEach(function (s) {
+      $(s).addEventListener("input", renderCalc);
+    });
+    $("#cTarget").addEventListener("input", function () {
+      var v = Math.max(1, +this.value || 1);
+      state.profile.targetHourly = v;
+      $("#qTarget").value = v;
+      renderQuote(); save(); renderCockpit(); renderCalc();
+    });
+
+    $("#btnExport").addEventListener("click", function () {
+      try {
+        var data = JSON.stringify({ app: "solo-os", v: 1, exportedAt: new Date().toISOString(), state: state }, null, 2);
+        var blob = new Blob([data], { type: "application/json" });
+        var url = URL.createObjectURL(blob);
+        var a = document.createElement("a");
+        a.href = url;
+        a.download = "solo-os-backup-" + todayISO() + ".json";
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        setTimeout(function () { URL.revokeObjectURL(url); }, 1500);
+        toast("备份已导出", "ok");
+      } catch (err) {
+        toast("导出失败：浏览器阻止了下载", "error");
+      }
+    });
+
+    $("#btnImport").addEventListener("click", function () { $("#fileInput").click(); });
+    $("#fileInput").addEventListener("change", function (e) {
+      var f = e.target.files && e.target.files[0];
+      if (!f) return;
+      var reader = new FileReader();
+      reader.onload = function () {
+        try {
+          var parsed = JSON.parse(String(reader.result));
+          var raw = parsed && parsed.state ? parsed.state : parsed;
+          if (!raw || typeof raw !== "object" || (!Array.isArray(raw.clients) && !Array.isArray(raw.projects))) {
+            toast("不是有效的备份文件，原数据未改动", "error");
+            return;
+          }
+          state = normalize(raw);
+          save(); renderAll();
+          toast("备份已导入 · " + state.clients.length + " 个客户 / " + state.projects.length + " 个项目", "ok");
+        } catch (err) {
+          toast("文件解析失败，原数据未改动", "error");
+        }
+      };
+      reader.onerror = function () { toast("文件读取失败，原数据未改动", "error"); };
+      reader.readAsText(f, "utf-8");
+      e.target.value = "";
+    });
+
+    $("#btnClear").addEventListener("click", function () {
+      askConfirm("清空全部数据", "客户、项目、任务与目标参数都会被删除，无法撤销。建议先导出备份。", function () {
+        state = blank();
+        $("#gAmount").value = 60000;
+        $("#gWeeks").value = 8;
+        $("#gDeal").value = 12000;
+        $("#gRate").value = 25;
+        $("#gQuotes").value = 1.6;
+        $("#cAmount").value = 24000;
+        $("#cQuoted").value = 60;
+        $("#cActual").value = 92;
+        $("#cTarget").value = 400;
+        $("#qTarget").value = 400;
+        save(); renderAll();
+        toast("已清空，回到空白台账", "ok");
+      });
+    });
+  }
+
+  /* ---------- 启动 ---------- */
+  state = load();
+  if (!state.profile.targetHourly) state.profile.targetHourly = 400;
+  $("#qTarget").value = state.profile.targetHourly;
+  $("#cTarget").value = state.profile.targetHourly;
+  $("#gAmount").value = state.plan.amount;
+  $("#gWeeks").value = state.plan.weeks;
+  $("#gDeal").value = state.plan.deal;
+  $("#gRate").value = state.plan.rate;
+  $("#gQuotes").value = state.plan.quotes;
+  bind();
+  renderAll();
+})();
+</script>
+</body>
+</html>

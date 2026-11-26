@@ -1,0 +1,278 @@
+{
+ "state": "sector-contract-ready",
+ "sector": "technology",
+ "delivery_adapter": "static-export",
+ "export_mode": "single-file",
+ "data_source": "static",
+ "network_dependencies": [],
+ "navigation_mode": "same-document",
+ "source_brief": {
+  "path": ".design-suite/source.json",
+  "preserved": true,
+  "unresolved": []
+ },
+ "references": {
+  "catalog": "technology-software-reference-pack",
+  "selection": "default-for-composition",
+  "composition_mode": "workflow-proof",
+  "available_source_count": 8,
+  "min_sources_per_page": 1,
+  "max_sources_per_page": 3,
+  "selected_source_count": 2,
+  "source_ids": [
+   "tech3",
+   "tech4"
+  ],
+  "sources": [
+   {
+    "id": "tech3",
+    "sample_code": "Tech3",
+    "evidence_source_id": "composition-tech3-product-overview",
+    "evidence_ids": [
+     "composition-tech3-numbered-workflow-chain",
+     "composition-tech3-ui-first-viewport",
+     "composition-tech3-mobile-local-hscroll"
+    ],
+    "supported_modes": [
+     "workflow-proof"
+    ]
+   },
+   {
+    "id": "tech4",
+    "sample_code": "Tech4",
+    "evidence_source_id": "composition-tech4-feature-page",
+    "evidence_ids": [
+     "composition-tech4-outcome-then-capability-catalog",
+     "composition-tech4-integration-catalog-local-scroll"
+    ],
+    "supported_modes": [
+     "workflow-proof"
+    ]
+   }
+  ],
+  "mechanism_dimensions": [
+   "information_architecture",
+   "trust_and_conversion",
+   "visual_language",
+   "media_strategy",
+   "responsive_behavior",
+   "interaction_and_motion"
+  ],
+  "usage_rule": "References inform named structure-layout and interaction-mechanism dimensions; the selected composition owns page content and section order."
+ },
+ "deliverable": "website",
+ "page_context": "website",
+ "design_target": "web",
+ "page": {
+  "product_domain": "saas",
+  "domain_overlay": "technology-industry",
+  "domain_requirements": [
+   "科技证据",
+   "产品能力",
+   "规格、限制、来源和采用路径",
+   "真实 UI/流程或对象媒体"
+  ],
+  "style_family": "flat",
+  "style_label": "扁平风",
+  "style_status": "existing",
+  "style_profile_id": "flat-canvas-product",
+  "product_scope": "single-product",
+  "page_task": "product-overview",
+  "content_archetype": null,
+  "audience": "general-user",
+  "primary_action": "直接在页面内完成记账式经营操作：录入客户与项目、计算报价、生成每周作战计划并查看经营驾驶舱",
+  "trust_strategy": "product-proof",
+  "media_strategy": "product-ui",
+  "visual_direction": "扁平风 / 纯白产品界面：纯白画布、单一强调色（深翡翠）、细边框低圆角、无默认阴影；以可操作的真实产品界面作为唯一媒体证据。",
+  "motion_level": "restrained",
+  "content_density": "medium",
+  "locale": "zh-CN",
+  "composition_mode": "workflow-proof"
+ },
+ "media": {
+  "generation_mode": "auto",
+  "media_required": false,
+  "model": "dumate-image",
+  "model_version": null,
+  "supplied_assets": [],
+  "generated_assets": [],
+  "missing_assets": [],
+  "runtime_status": "not-needed"
+ },
+ "facts": {
+  "supplied": [
+   {
+    "field": "product_name",
+    "value": "Solo OS · 一人公司经营作战室",
+    "source": "user brief"
+   }
+  ],
+  "unresolved": [
+   "capabilities",
+   "customers",
+   "metrics",
+   "pricing",
+   "availability",
+   "security",
+   "compliance",
+   "performance"
+  ],
+  "creative_additions": [
+   {
+    "field": "design_thesis",
+    "value": "以「接单-定价-排期-回款」四阶段工作流作为页面骨架，每个阶段直接给出可操作界面作为证明",
+    "label": "concept decision"
+   },
+   {
+    "field": "accent_color",
+    "value": "#0E7C66 深翡翠单一强调色，仅用于主按钮、选中态、进度与正向金额",
+    "label": "concept decision"
+   }
+  ]
+ },
+ "design": {
+  "thesis": "One-person company needs an operating system, not a notebook. 用户摩擦：客户、报价、交付、回款散落在微信与表格里，做多赚少且看不到现金流。证明方式：首屏即真实可操作驾驶舱，四阶段各有可检查界面与真实计算。",
+  "composition": {
+   "catalog": "technology-software-compositions",
+   "mode": "workflow-proof",
+   "path": "references/sectors/technology/compositions/workflow-proof.md",
+   "section_contract_loaded": true
+  },
+  "first_viewport": "左侧：产品定位、一句价值、主行动（开始录入）与次行动（载入示例数据）；右侧：真实驾驶舱（营收/应收/在办/有效时薪 + 未来8周应收柱状图）；底部露出下一节。",
+  "sections": [
+   {
+    "id": "1-object-outcome",
+    "purpose": "是什么、给谁、下一步",
+    "proof": "可操作驾驶舱与实时计算指标",
+    "layout": "hero 5/7 双列，窄屏单列 claim->proof->action",
+    "media": "product-ui",
+    "states": [
+     "empty",
+     "demo-loaded",
+     "error"
+    ]
+   },
+   {
+    "id": "2-obtainable-result",
+    "purpose": "用户能得到什么结果",
+    "proof": "工时偏差计算器实时算出实际有效时薪与报价缺口",
+    "layout": "claim + 双输入 + 结果条",
+    "media": "product-ui",
+    "states": [
+     "empty",
+     "invalid-input"
+    ]
+   },
+   {
+    "id": "3-workflow-stages",
+    "purpose": "四个阶段与具名能力",
+    "proof": "编号阶段带 01-04 与阶段能力名",
+    "layout": "阶段头 + 界面证明",
+    "media": "product-ui",
+    "states": [
+     "empty"
+    ]
+   },
+   {
+    "id": "4-stage-proof",
+    "purpose": "每阶段连接真实界面与状态变化",
+    "proof": "客户项目台账、报价台、作战计划、回款登记四处真实界面",
+    "layout": "界面面板，可局部滚动",
+    "media": "product-ui",
+    "states": [
+     "empty",
+     "success",
+     "error",
+     "disabled"
+    ]
+   },
+   {
+    "id": "5-boundaries",
+    "purpose": "适用对象、限制、失败与恢复",
+    "proof": "边界清单 + 失败/恢复对照",
+    "layout": "两列定义表，窄屏单列",
+    "media": "type",
+    "states": [
+     "not-applicable"
+    ]
+   },
+   {
+    "id": "6-enterprise-constraints",
+    "purpose": "企业 IT/采购约束",
+    "proof": "省略：本作品面向个人 OPC，无企业 IT/采购/安全采购流程",
+    "layout": "omitted",
+    "media": "none",
+    "states": [
+     "not-applicable"
+    ]
+   },
+   {
+    "id": "7-action-support",
+    "purpose": "重复主行动与支持入口",
+    "proof": "导出/导入/清空数据与版本说明",
+    "layout": "收束带 + 页脚产品地图",
+    "media": "type",
+    "states": [
+     "success",
+     "error"
+    ]
+   }
+  ],
+  "tokens": {
+   "canvas": "#FFFFFF",
+   "surface_soft": "#F6F7F9",
+   "ink": "#0E1116",
+   "muted": "#5B6472",
+   "line": "#E4E7EC",
+   "accent": "#0E7C66",
+   "danger": "#B42318",
+   "warn": "#B45309",
+   "radius_card": "6px",
+   "radius_control": "6px",
+   "border": "1px",
+   "shadow": "none",
+   "container_max": "1280px",
+   "gutter": "{desktop:32px,mobile:18px}",
+   "font_stack": "Inter, -apple-system, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif",
+   "mono_stack": "ui-monospace, 'SF Mono', Consolas, monospace"
+  },
+  "avoid": [
+   "渐变光效",
+   "玻璃拟态",
+   "深色背景铺满",
+   "装饰性插画替代界面",
+   "伪数据指标"
+  ]
+ },
+ "responsive": {
+  "mobile_layout": "required",
+  "viewport_matrix": [
+   "320x568",
+   "390x844",
+   "768x1024",
+   "1440x1000",
+   "1920x1080",
+   "2560x1080"
+  ],
+  "container_invariants": [
+   "document.scrollWidth <= viewport width",
+   "产品面板在窄屏单列重排，不等比缩小",
+   "项目台账在窄屏改为堆叠行，不使用页面级横滑"
+  ],
+  "geometry_evidence": ".design-suite/layout-geometry.json"
+ },
+ "accessibility": {
+  "target": "WCAG 2.1 AA（正文对比度≥4.5:1，控件≥3:1）",
+  "keyboard": "跳转到主内容是第一个可聚焦元素；全部表单、按钮、删除确认与导入导出可用键盘完成；Esc 关闭确认对话框并把焦点还给触发按钮",
+  "focus": "2px 强调色外描边 + 2px 偏移，仅 :focus-visible 显示",
+  "reduced_motion": "prefers-reduced-motion: reduce 时取消过渡与入场位移，直接呈现终态"
+ },
+ "downstream_capabilities": [
+  {
+   "capability": "page-workflows/product-proof-saas",
+   "responsibility": "把真实界面、工作流和状态变化变成核心证据"
+  }
+ ],
+ "delivery_format": "single-html",
+ "asset_policy": "inline-base64"
+}

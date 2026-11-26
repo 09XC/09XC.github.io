@@ -1,0 +1,864 @@
+{
+  "schema_version": "1.0.0",
+  "state": "compiled-route-contract",
+  "cache_key": "flat-canvas-product:1.0.0:c4c39c57d0778a8aeb1612fa74a96b699f86a0b2a361c87ac689f4e774e4b6d8:-:flat-pure-white-product-ui:52a93a9e8141910df794a96a436699690cbab9ee4563deaf48919664f18a9c2a:62ab0e64957cac5a07b3c1b4adb1dab69ff18b0f2b5eda742c729089d8f9031e:-:b60518f80810833f9fdfcfb61e2d466ada463371cff7492ec7ca13dba1a7fd0b",
+  "source_route": {
+    "path": ".design-suite/route.json",
+    "sha256": "602ea2948894fceafd16945a6dd5dfc75acbd0b8edce2c569f24cba5e90f8359",
+    "state": "route-ready"
+  },
+  "profile": {
+    "id": "flat-canvas-product",
+    "label": "扁平风",
+    "status": "pilot",
+    "path": "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/design-style-core/references/presets/flat-canvas-product/preset.json",
+    "runtime_manifest": {
+      "path": "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/design-style-core/references/presets/flat-canvas-product/manifest.json",
+      "sha256": "f1d4ef8779ddd7d4a10c9283bca5fd74de53d3889bdf3b6d0f4527ab59a2e9a4"
+    },
+    "prompt": {
+      "variant_id": "product-ui",
+      "path": "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/design-style-core/references/presets/flat-canvas-product/variants/flat-product-ui-PROMPT.md",
+      "sha256": "62ab0e64957cac5a07b3c1b4adb1dab69ff18b0f2b5eda742c729089d8f9031e"
+    },
+    "visual_contract": {
+      "intent": {
+        "design_thesis": "让对象先被看清：用浅色平面、一条强调色和可检查的产品或插画面，把行动放到第一视口。",
+        "tone": [
+          "明亮",
+          "直接",
+          "克制",
+          "可拿走"
+        ],
+        "emotional_goal": "让用户立刻理解产品能做什么、如何开始，而不是被气氛、粒子或拟物细节拖住。",
+        "differentiation": "扁平来自浅色表面、单一强调色和平面媒体层级，不来自厚拟物按钮、霓虹粒子、玻璃拟态或手绘纹理堆砌。"
+      },
+      "visual_language": {
+        "color": [
+          "默认使用纯白画布；浅灰只用于分区，米色/暖白必须由项目明确指定 modifier 才可使用。正文用近黑无衬线，次文用中性灰，对比度必须达标。",
+          "全页只选一个强调色，由项目品牌决定；它只出现在主按钮、关键词、选中态、进行中状态或插画可替换层。",
+          "章节可用很浅的冷色或纸感洗底，但不得把强调色铺满背景、卡片或全部按钮。"
+        ],
+        "typography": [
+          "营销层优先清晰无衬线；展示体或衬线只用于短标题，且必须已授权。",
+          "产品界面内部可使用系统 UI 字体，与营销层字体分开，避免把系统铬当成品牌身份。",
+          "字号按断点离散收拢；正文、数字、价格和 CTA 必须横排可读。"
+        ],
+        "spacing": [
+          "首屏和章节使用宽松留白，但每个留白分组必须有标题、对象/证明和下一步。",
+          "桌面可用窄内容柱或双列产品面板；窄屏重新计算上下间距，不等比缩小舞台构图。"
+        ],
+        "layout": [
+          "首屏把主张、主行动和可检查媒体放在同一视口；后续用步骤、工作流、能力卡或场景带证明。",
+          "导航保持低高度：资源库和消费账户可极简，SaaS 可采用路径导航，但不得把后台壳搬进营销首页。",
+          "结尾重复同一主行动，页脚按产品地图或轻量法律链接收束，不做装饰三列。"
+        ],
+        "shape": [
+          "卡片和控件使用中等圆角；主按钮可为胶囊或实心圆角块，次按钮用细描边。",
+          "层级优先靠色差、细边框和留白，而不是深阴影或玻璃拟态。",
+          "阴影只表达轻微抬起或媒体深度，不得做成拟物厚唇或持续漂浮。"
+        ],
+        "imagery": [
+          "默认媒体必须是可检查的产品界面、信息模块或流程状态；扁平插画只在明确的 illustration-library 任务中使用。",
+          "插画变体保持少量阴影、友好人体比例和可替换单强调色；摄影、3D 和手绘纹理不是默认。",
+          "缺少真实素材时用已解析的白名单 provider 生成概念媒体并标注 generated-concept，不得冒充可下载资产、客户后台或链上成交。"
+        ],
+        "iconography": [
+          "步骤、能力卡和状态使用少量线性或平面图标，并配可访问名称。",
+          "不为装饰引入图标墙，也不复制样本角色、徽章或品牌符号。"
+        ],
+        "motion": [
+          "默认 restrained：短状态过渡、可暂停循环演示、吸顶显现。",
+          "逐字显现、跑马灯和入场交错必须提供 reduced-motion 回退；无动效时主行动和证明仍完整。"
+        ]
+      },
+      "rules": [
+        {
+          "id": "light-canvas-one-accent",
+          "level": "MUST",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "页面必须用中性浅色画布或项目定义的主题化舞台、近黑/高对比正文和单一主行动色建立表面层级；促销媒体或插画舞台可使用受控辅助色，但不能让辅助色铺满所有按钮或语义状态。",
+          "rationale": "Tech28、Tech30、Tech31、Tech32 都把亮色平面和一条强调色当作扁平身份，而不是多色霓虹。",
+          "validation": "关闭装饰洗底后检查正文对比度；统计强调色只出现在主行动、选中态或插画可替换层。",
+          "evidence_ids": [
+            "fcp-tech28-light-canvas",
+            "fcp-tech30-paper-canvas",
+            "fcp-tech31-light-fintech",
+            "fcp-tech32-flat-people-canvas",
+            "fcp-tech33-light-product-canvas",
+            "fcp-tech33-bounded-palette",
+            "fcp-tech34-flat-vector-system",
+            "fcp-tech34-themed-stage"
+          ]
+        },
+        {
+          "id": "inspectable-product-or-flat-media",
+          "level": "MUST",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "首屏和主要证明带必须呈现可检查的产品界面或扁平插画面；概念媒体不能替代产品状态、许可或可下载资产。",
+          "rationale": "多组来源都以界面票面、桌面窗口或扁平场景证明对象，而不是让生活方式摄影替代产品事实。",
+          "validation": "隐藏装饰层后检查对象身份、状态文案和下一步仍成立；生成图必须标注 generated-concept。",
+          "evidence_ids": [
+            "fcp-tech28-one-accent-scenes",
+            "fcp-tech29-product-chrome",
+            "fcp-tech30-window-as-proof",
+            "fcp-tech31-ticket-proof",
+            "fcp-tech32-flat-people-canvas",
+            "fcp-tech33-card-proof",
+            "fcp-tech34-illustration-is-product"
+          ]
+        },
+        {
+          "id": "solid-primary-on-first-viewport",
+          "level": "MUST",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "第一视口必须有高对比实心主按钮，文字不得压住产品数据、日期格子或插画主体。",
+          "rationale": "扁平页靠明确拿走/开始行动成立；幽灵按钮和玻璃拟态会削弱第一行动。",
+          "validation": "检查 1440px 与 390px 的主 CTA 对比度、宽度和是否被媒体遮挡。",
+          "evidence_ids": [
+            "fcp-tech28-light-canvas",
+            "fcp-tech29-high-contrast-cta",
+            "fcp-tech30-paper-canvas",
+            "fcp-tech31-light-fintech",
+            "fcp-tech32-flat-people-canvas",
+            "fcp-tech33-one-primary-action",
+            "fcp-tech34-library-cta"
+          ]
+        },
+        {
+          "id": "flat-shape-not-skeuomorph",
+          "level": "MUST",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "卡片、按钮和面板必须用细边框、页面内一致的项目圆角、色差和留白分层；圆角可从近直角到大圆角，但禁止厚拟物按钮、持续漂浮粒子、霓虹网格或玻璃拟态作为主语法。",
+          "rationale": "扁平身份来自平面层级。拟物按压、粒子和玻璃会滑向其他风格。",
+          "validation": "扫描 box-shadow 厚度、渐变文字、粒子画布和 backdrop-filter 是否成为主表面。",
+          "evidence_ids": [
+            "fcp-tech28-light-canvas",
+            "fcp-tech29-product-chrome",
+            "fcp-tech30-paper-canvas",
+            "fcp-tech31-light-fintech",
+            "fcp-tech32-flat-people-canvas",
+            "fcp-tech33-card-surfaces",
+            "fcp-tech33-surface-radius-range",
+            "fcp-tech34-flat-vector-system"
+          ]
+        },
+        {
+          "id": "narrow-reflow-keep-proof",
+          "level": "MUST",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "窄屏必须单列重排或使用受控局部横滑；不得隐藏唯一证明带，也不得复制禁用缩放手势。",
+          "rationale": "Tech32 隐藏场合滑块和 Tech31 的 zoom lock 都是反例；Tech28/Tech30 的 class 合同指向真实重排。",
+          "validation": "在 320px 与 390px 检查 scrollWidth、主行动、证明带可见性和 user-scalable。",
+          "evidence_ids": [
+            "fcp-tech28-class-reflow",
+            "fcp-tech32-keep-proof-on-narrow",
+            "fcp-tech31-no-zoom-lock",
+            "fcp-responsive-contract",
+            "fcp-tech33-single-column-proof",
+            "fcp-tech34-narrow-library-proof"
+          ]
+        },
+        {
+          "id": "restrained-flat-motion",
+          "level": "SHOULD",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "动效保持克制：短状态过渡、可暂停循环演示和吸顶显现；逐字、跑马灯和入场交错必须有 reduced-motion 回退。",
+          "rationale": "Tech30 明确关闭非必要动效；其他来源的动效都是证明，不是气氛。",
+          "validation": "在 prefers-reduced-motion 下关闭非必要动效，并验证主 CTA、媒体失败和键盘焦点。",
+          "evidence_ids": [
+            "fcp-tech30-reduced-motion",
+            "fcp-tech34-asset-provenance"
+          ]
+        },
+        {
+          "id": "personal-finance-result-first",
+          "level": "MUST",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "个人财务管理页必须先讲清一个用户结果或财务目标，再用 dashboard、预算界面、账户状态或资金流程证明它；不能先堆叠泛功能名词。",
+          "rationale": "Tech55–Tech57 分别以财务清晰度、预算掌控感和节省结果组织页面，产品界面承担可检查证明。",
+          "validation": "隐藏装饰媒体后检查结果主张、账户/预算对象、状态字段和下一步行动仍成立。",
+          "evidence_ids": [
+            "fcp-tech55-dashboard-as-proof",
+            "fcp-tech56-onboarding-proof",
+            "fcp-tech57-result-chapters"
+          ]
+        },
+        {
+          "id": "personal-finance-action-chapters",
+          "level": "SHOULD",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "个人财务管理页应按 Track、Budget、Save、Manage 等用户可理解的财务动作分章节，每章只承载一个结果、证明和下一步。",
+          "rationale": "三组来源都把复杂财务能力拆成单一动作或行为路径，减少同权重卡片墙和认知负担。",
+          "validation": "检查章节标题、动作、产品证明和 CTA 是否一一对应；扩展能力不得抢占首要结果。",
+          "evidence_ids": [
+            "fcp-tech55-action-chapters",
+            "fcp-tech57-result-chapters"
+          ]
+        },
+        {
+          "id": "personal-finance-trust-and-plan-boundary",
+          "level": "MUST",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "账户连接范围、隐私/安全边界、价格/试用、免费与高级版资格以及评价来源必须由项目事实提供，并在对应采用行动附近可见。",
+          "rationale": "个人财务转化同时依赖数据连接可信度、方案边界和行为/规模证明；这些字段不能从参考站点推断。",
+          "validation": "逐项核对来源、日期、口径、地区和恢复规则；缺失事实保持 unresolved，不用概念媒体或虚构统计填空。",
+          "evidence_ids": [
+            "fcp-tech55-action-chapters",
+            "fcp-tech57-plan-boundary"
+          ]
+        },
+        {
+          "id": "library-filter-and-provenance",
+          "level": "MUST",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "插画资源库页面必须提供可见的集合筛选或搜索，并在下载/使用行动附近展示项目真实许可、作者和文件格式；概念媒体不得进入可下载资产列表。",
+          "rationale": "Tech34 的资源库把浏览缩小、编辑能力和许可 provenance 作为产品证明，而不是装饰画廊。",
+          "validation": "检查筛选状态可见且可恢复；逐项核对许可、作者、格式和媒体 provenance。",
+          "evidence_ids": [
+            "fcp-tech34-library-filter-system",
+            "fcp-tech34-license-next-to-action",
+            "fcp-tech34-asset-provenance"
+          ]
+        },
+        {
+          "id": "identity-and-fact-boundary",
+          "level": "AVOID",
+          "applies_to": [
+            "website"
+          ],
+          "statement": "不得复制参考品牌的 Logo、字体、精确色值、插画角色、系统窗口铬、客户评价或把概念图当成可下载资产与产品事实。",
+          "rationale": "可迁移的是视觉机制，不是样本身份或未经确认的业务事实。",
+          "validation": "检查资产 provenance、字体授权、产品事实来源和页面相似度；缺失事实保持 unresolved。",
+          "evidence_ids": [
+            "fcp-tech28-one-accent-scenes",
+            "fcp-tech29-product-chrome",
+            "fcp-tech30-window-as-proof",
+            "fcp-tech31-ticket-proof",
+            "fcp-tech32-flat-people-canvas",
+            "fcp-tech33-reject-identity",
+            "fcp-tech34-reject-illustration-identity"
+          ]
+        }
+      ],
+      "page_context_adapter": {
+        "navigation": [
+          "低高度营销导航：资源库/账户可极简，SaaS 按采用路径组织；不得引入后台壳。"
+        ],
+        "layout": [
+          "首屏主张 + 实心主行动 + 可检查媒体；后续步骤/工作流/能力卡/场景带；结尾重复同一行动。"
+        ],
+        "typography": [
+          "营销层无衬线，产品铬可用系统 UI 字体；展示体只用于短标题且必须授权。"
+        ],
+        "media": [
+          "扁平插画或产品界面优先；生成媒体标注 generated-concept，不得冒充可下载资产。"
+        ],
+        "interaction": [
+          "吸顶、短状态过渡、可暂停循环演示；无动效时主行动和证明仍完整。"
+        ],
+        "constraints": [
+          "移动端必须单列重排且页面无横向溢出；不得虚构价格、许可、客户或认证。"
+        ],
+        "responsive": {
+          "navigation": [
+            "窄屏收敛为标志与主行动，mega-menu 不得等比缩小。"
+          ],
+          "layout": [
+            "步骤、能力卡、报价和 FAQ 改为单列；宽产品界面用局部横滑，不产生页面级溢出。"
+          ],
+          "typography": [
+            "标题按断点收拢；正文、数字和 CTA 保持横排与可读字号。"
+          ],
+          "media": [
+            "重新定义舞台焦点和裁切安全区，不把四角插画或宽窗口直接缩小到不可读。"
+          ],
+          "interaction": [
+            "主行动保持全宽可点；reduced-motion 关闭逐字、跑马灯和入场交错。"
+          ],
+          "constraints": [
+            "至少检查 320px 与 390px；允许缩放；不得隐藏唯一证明带。"
+          ]
+        }
+      },
+      "identity_boundary": {
+        "reference_only": false,
+        "must_not_copy": [
+          "任何参考品牌的 Logo、字标、口号、专有字体、完整色板和可识别首屏构图",
+          "样本插画角色、场景 SVG、人物拼贴、系统窗口铬、兑换页票面和客户评价",
+          "把扁平概念媒体当作真实产品、客户、许可、价格、认证或可下载资产"
+        ],
+        "production_rule": "只迁移浅色画布、单一强调色、细边框/中等圆角、扁平插画或产品界面证明、克制阴影与窄屏重排；项目必须重新生成语义 token、品牌资产、产品事实和媒体 provenance。"
+      }
+    },
+    "selected_variant": {
+      "id": "product-ui",
+      "label": "纯白产品界面",
+      "kind": "general",
+      "metric_set": "flat-pure-white-product-ui",
+      "prompt_path": "variants/flat-product-ui-PROMPT.md",
+      "signals": [
+        "产品界面",
+        "信息模块",
+        "服务产品",
+        "纯白扁平",
+        "product UI",
+        "information modules"
+      ],
+      "source_codes": [
+        "Tech39",
+        "Tech40",
+        "Tech42",
+        "Tech43"
+      ]
+    },
+    "quantitative": {
+      "id": "flat-pure-white-product-ui",
+      "label": "纯白产品界面参数集",
+      "selection": "profile-default",
+      "path": "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/design-style-core/references/style-metrics/flat-pure-white-product-ui.json",
+      "tokens": {
+        "container": {
+          "max_width_px": [
+            960,
+            1224
+          ],
+          "gutter_px": {
+            "desktop": [
+              24,
+              40
+            ],
+            "mobile": [
+              16,
+              24
+            ]
+          },
+          "reading_width_px": [
+            640,
+            800
+          ]
+        },
+        "typography": {
+          "font_role": "project-owned neutral sans-serif",
+          "display_px": {
+            "desktop": [
+              36,
+              64
+            ],
+            "mobile": [
+              28,
+              44
+            ]
+          },
+          "section_heading_px": [
+            24,
+            36
+          ],
+          "body_px": [
+            16,
+            18
+          ],
+          "supporting_px": [
+            14,
+            16
+          ],
+          "line_height": {
+            "display": [
+              1.1,
+              1.3
+            ],
+            "body": [
+              1.4,
+              1.6
+            ]
+          },
+          "weight": {
+            "display": [
+              600,
+              700
+            ],
+            "body": [
+              400,
+              500
+            ],
+            "button": [
+              500,
+              700
+            ]
+          },
+          "measure_chars": [
+            42,
+            72
+          ]
+        },
+        "spacing": {
+          "base_unit_px": 4,
+          "section_padding_y_px": [
+            32,
+            64
+          ],
+          "hero_gap_px": [
+            24,
+            40
+          ],
+          "card_gap_px": [
+            16,
+            24
+          ],
+          "control_gap_px": [
+            8,
+            16
+          ]
+        },
+        "shape": {
+          "card_radius_px": [
+            0,
+            8
+          ],
+          "control_radius_px": [
+            0,
+            4
+          ],
+          "border_px": [
+            0,
+            1
+          ],
+          "shadow": "none by default; restrained lift only for explicitly floating surfaces"
+        },
+        "controls": {
+          "button_height_px": [
+            44,
+            52
+          ],
+          "button_font_px": [
+            16,
+            18
+          ],
+          "button_radius_px": [
+            0,
+            4
+          ]
+        },
+        "layout": {
+          "grid_columns": {
+            "desktop": 12,
+            "tablet": 8,
+            "mobile": 4
+          },
+          "hero_columns": [
+            5,
+            7
+          ],
+          "card_min_width_px": [
+            240,
+            320
+          ],
+          "section_rhythm": "identity -> object/task -> interface or information proof -> boundary -> action"
+        },
+        "media": {
+          "hero_ratio": [
+            1.4,
+            2.0
+          ],
+          "product_panel_ratio": [
+            1.5,
+            2.2
+          ],
+          "safe_area_percent": 8,
+          "object_position": "center center"
+        },
+        "motion": {
+          "entrance_ms": [
+            160,
+            240
+          ],
+          "state_ms": [
+            100,
+            160
+          ],
+          "stagger_ms": [
+            0,
+            40
+          ],
+          "easing": "ease-out",
+          "reduced_motion": "instant state with no stagger"
+        },
+        "responsive": {
+          "breakpoints_px": [
+            640,
+            768,
+            1024,
+            1280
+          ],
+          "mobile_order": "identity -> task -> proof module -> action -> detail",
+          "local_hscroll_only": true
+        }
+      },
+      "basis": {
+        "aggregation": "per-source browser observations, mechanism-clustered production ranges",
+        "source_codes": [
+          "Tech39",
+          "Tech40",
+          "Tech42",
+          "Tech43"
+        ],
+        "confidence": "medium",
+        "note": "Tech41 was limited-render and excluded. Values are production starting ranges, not reference brand tokens."
+      },
+      "selection_guidance": {
+        "when": [
+          "通用服务、产品首页、信息模块和流程证明需要纯白、低半径、可扫描界面"
+        ],
+        "avoid_when": [
+          "插画资源库、明确要求暖白/米色、预约表单亲和风格或金融专属变体"
+        ],
+        "override_policy": "Project brand may define the action color; preserve pure-white canvas and low-radius ranges unless a deliberate modifier is recorded."
+      }
+    }
+  },
+  "page": {
+    "deliverable": "website",
+    "page_context": "website",
+    "design_target": "web",
+    "product_domain": "saas",
+    "domain_overlay": "technology-industry",
+    "domain_requirements": [
+      "科技证据",
+      "产品能力",
+      "规格、限制、来源和采用路径",
+      "真实 UI/流程或对象媒体"
+    ],
+    "product_scope": "single-product",
+    "page_task": "product-overview",
+    "audience": "general-user",
+    "primary_action": "直接在页面内完成记账式经营操作：录入客户与项目、计算报价、生成每周作战计划并查看经营驾驶舱",
+    "trust_strategy": "product-proof",
+    "media_strategy": "product-ui",
+    "motion_level": "restrained",
+    "content_density": "medium",
+    "locale": "zh-CN",
+    "composition_mode": "workflow-proof"
+  },
+  "theme": {
+    "mode": null,
+    "selection_reason": null,
+    "policy": null
+  },
+  "domain": {
+    "id": "technology-industry",
+    "requirements": [
+      "科技证据",
+      "产品能力",
+      "规格、限制、来源和采用路径",
+      "真实 UI/流程或对象媒体"
+    ]
+  },
+  "composition": {
+    "route": {
+      "catalog": "technology-software-compositions",
+      "catalog_key": "software_composition_catalog",
+      "catalog_status": "draft",
+      "mode": "workflow-proof",
+      "path": "references/sectors/technology/compositions/workflow-proof.md",
+      "selection": "explicit",
+      "evidence_ids": [
+        "composition-tech3-numbered-workflow-chain",
+        "composition-tech3-ui-first-viewport",
+        "composition-tech3-mobile-local-hscroll",
+        "composition-tech4-outcome-then-capability-catalog",
+        "composition-tech4-integration-catalog-local-scroll"
+      ],
+      "responsibility": "Own the page content decision and section order; downstream capabilities may implement structure layout, interaction mechanisms, or media but cannot replace this composition."
+    },
+    "outline": [
+      {
+        "level": 1,
+        "title": "工作流证明型 / Workflow Proof"
+      },
+      {
+        "level": 2,
+        "title": "选择条件"
+      },
+      {
+        "level": 2,
+        "title": "必要输入"
+      },
+      {
+        "level": 2,
+        "title": "页面内容决策"
+      },
+      {
+        "level": 2,
+        "title": "页面结构布局"
+      },
+      {
+        "level": 2,
+        "title": "跨端结构布局与页面交互机制"
+      },
+      {
+        "level": 2,
+        "title": "章节编号与省略"
+      },
+      {
+        "level": 2,
+        "title": "禁止"
+      },
+      {
+        "level": 2,
+        "title": "验收"
+      }
+    ],
+    "loaded": true
+  },
+  "media": {
+    "mode": "auto",
+    "policy": {
+      "requested_mode": "auto",
+      "effective_mode": "auto",
+      "illustration_required": false,
+      "signals": [],
+      "reason": "requested-or-default-mode",
+      "conflict": false
+    },
+    "model": null,
+    "executor": null,
+    "allowed_models": [
+      "comate-image",
+      "dumate-image",
+      "gpt-image-2"
+    ],
+    "model_state": "media-runtime-host-unresolved",
+    "state": "blocked",
+    "trigger": "required-media-slot-without-suitable-supplied-asset",
+    "provenance": "generated-concept",
+    "supplied_assets": [],
+    "runtime_status": "not-requested",
+    "host_source": null,
+    "runtime_host": null
+  },
+  "references": {
+    "catalog": {
+      "id": "technology-software-reference-pack",
+      "status": "pilot",
+      "source_count": 8,
+      "min_sources_per_page": 1,
+      "max_sources_per_page": 3,
+      "sources": [
+        {
+          "id": "tech3",
+          "sample_code": "Tech3",
+          "urls": [
+            "https://linear.app/"
+          ],
+          "supported_modes": [
+            "workflow-proof"
+          ]
+        },
+        {
+          "id": "tech4",
+          "sample_code": "Tech4",
+          "urls": [
+            "https://zapier.com/workflows"
+          ],
+          "supported_modes": [
+            "workflow-proof"
+          ]
+        },
+        {
+          "id": "tech5",
+          "sample_code": "Tech5",
+          "urls": [
+            "https://docs.stripe.com/"
+          ],
+          "supported_modes": [
+            "platform-reference"
+          ]
+        },
+        {
+          "id": "tech6",
+          "sample_code": "Tech6",
+          "urls": [
+            "https://docs.anthropic.com/",
+            "https://platform.claude.com/docs/en/home"
+          ],
+          "supported_modes": [
+            "platform-reference"
+          ]
+        },
+        {
+          "id": "tech7",
+          "sample_code": "Tech7",
+          "urls": [
+            "https://www.databricks.com/product/pricing"
+          ],
+          "supported_modes": [
+            "plan-decision"
+          ]
+        },
+        {
+          "id": "tech8",
+          "sample_code": "Tech8",
+          "urls": [
+            "https://www.snowflake.com/pricing/",
+            "https://www.snowflake.com/en/pricing-options/"
+          ],
+          "supported_modes": [
+            "plan-decision"
+          ]
+        },
+        {
+          "id": "tech9",
+          "sample_code": "Tech9",
+          "urls": [
+            "https://www.crowdstrike.com/platform/",
+            "https://www.crowdstrike.com/en-us/platform/"
+          ],
+          "supported_modes": [
+            "institution-assurance"
+          ]
+        },
+        {
+          "id": "tech10",
+          "sample_code": "Tech10",
+          "urls": [
+            "https://www.okta.com/customers/"
+          ],
+          "supported_modes": [
+            "institution-assurance"
+          ]
+        }
+      ],
+      "mechanism_dimensions": [
+        {
+          "id": "information_architecture",
+          "label": "Information architecture"
+        },
+        {
+          "id": "trust_and_conversion",
+          "label": "Trust and conversion"
+        },
+        {
+          "id": "visual_language",
+          "label": "Visual language"
+        },
+        {
+          "id": "media_strategy",
+          "label": "Media strategy"
+        },
+        {
+          "id": "responsive_behavior",
+          "label": "Responsive behavior"
+        },
+        {
+          "id": "interaction_and_motion",
+          "label": "Interaction and motion"
+        }
+      ]
+    },
+    "trace": {
+      "catalog": "technology-software-reference-pack",
+      "selection": "default-for-composition",
+      "composition_mode": "workflow-proof",
+      "available_source_count": 8,
+      "min_sources_per_page": 1,
+      "max_sources_per_page": 3,
+      "selected_source_count": 2,
+      "source_ids": [
+        "tech3",
+        "tech4"
+      ],
+      "sources": [
+        {
+          "id": "tech3",
+          "sample_code": "Tech3",
+          "evidence_source_id": "composition-tech3-product-overview",
+          "evidence_ids": [
+            "composition-tech3-numbered-workflow-chain",
+            "composition-tech3-ui-first-viewport",
+            "composition-tech3-mobile-local-hscroll"
+          ],
+          "supported_modes": [
+            "workflow-proof"
+          ]
+        },
+        {
+          "id": "tech4",
+          "sample_code": "Tech4",
+          "evidence_source_id": "composition-tech4-feature-page",
+          "evidence_ids": [
+            "composition-tech4-outcome-then-capability-catalog",
+            "composition-tech4-integration-catalog-local-scroll"
+          ],
+          "supported_modes": [
+            "workflow-proof"
+          ]
+        }
+      ],
+      "mechanism_dimensions": [
+        "information_architecture",
+        "trust_and_conversion",
+        "visual_language",
+        "media_strategy",
+        "responsive_behavior",
+        "interaction_and_motion"
+      ],
+      "usage_rule": "References inform named structure-layout and interaction-mechanism dimensions; the selected composition owns page content and section order."
+    }
+  },
+  "downstream_capabilities": [
+    {
+      "legacy_skill": "product-proof-saas",
+      "capability": "page-workflows/product-proof-saas",
+      "path": "assets/capabilities/product-proof-saas/CAPABILITY.md",
+      "responsibility": "把真实界面、工作流和状态变化变成核心证据",
+      "reason": "trust_strategy=product-proof"
+    }
+  ],
+  "validation_plan": [
+    "visual",
+    "responsive",
+    "interaction",
+    "accessibility"
+  ],
+  "load_plan": {
+    "loaded": [
+      ".design-suite/route.json",
+      "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/design-style-core/references/preset-index.json",
+      "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/design-style-core/references/presets/flat-canvas-product/preset.json",
+      "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/design-style-core/references/presets/flat-canvas-product/manifest.json",
+      "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/design-style-core/references/style-metrics/flat-pure-white-product-ui.json",
+      "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/design-style-core/references/presets/flat-canvas-product/variants/flat-product-ui-PROMPT.md",
+      "C:/Users/zxc/AppData/Roaming/qianfan-desktop-app/qianfan_desk_xdg/896a45d37fef4c9bae08f094ae4fbb25/data/plugins/official/design-suite-router/skills/build-website-page/references/sectors/technology/compositions/workflow-proof.md"
+    ],
+    "parallelizable": [
+      "visual-contract",
+      "domain-requirements",
+      "page-composition"
+    ],
+    "deferred": [
+      "DESIGN.md",
+      "evidence.json",
+      "references/research/*.json"
+    ]
+  }
+}

@@ -1,0 +1,526 @@
+{
+  "target": "http://127.0.0.1:8766/index.html",
+  "generated_at": "2026-11-26T04:21:53.518Z",
+  "required_viewports": [
+    {
+      "id": "320x568",
+      "width": 320,
+      "height": 568
+    },
+    {
+      "id": "390x844",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "id": "768x1024",
+      "width": 768,
+      "height": 1024
+    },
+    {
+      "id": "1440x1000",
+      "width": 1440,
+      "height": 1000
+    },
+    {
+      "id": "1920x1080",
+      "width": 1920,
+      "height": 1080
+    },
+    {
+      "id": "2560x1080",
+      "width": 2560,
+      "height": 1080
+    }
+  ],
+  "viewports": [
+    {
+      "id": "320x568",
+      "width": 320,
+      "height": 568,
+      "client_width": 320,
+      "scroll_width": 320,
+      "console_errors": 0,
+      "console_warnings": 0,
+      "image_count": 0,
+      "loaded_images": 0,
+      "probes": {
+        "main": {
+          "width": 320,
+          "left": 0,
+          "right": 320,
+          "height": 12108.2
+        },
+        "hero_grid": {
+          "width": 320,
+          "left": 0,
+          "right": 320,
+          "height": 1114.8
+        },
+        "cockpit": {
+          "width": 284,
+          "left": 18,
+          "right": 302,
+          "height": 469.8
+        },
+        "project_rows": {
+          "width": 250,
+          "left": 35,
+          "right": 285,
+          "height": 116.6
+        },
+        "quote_grid": {
+          "width": 250,
+          "left": 35,
+          "right": 285,
+          "height": 1442.7
+        },
+        "plan_grid": {
+          "width": 250,
+          "left": 35,
+          "right": 285,
+          "height": 1169.3
+        },
+        "recovery_table": {
+          "width": 284,
+          "left": 18,
+          "right": 302,
+          "height": 955.5
+        }
+      }
+    },
+    {
+      "id": "390x844",
+      "width": 390,
+      "height": 844,
+      "client_width": 390,
+      "scroll_width": 390,
+      "console_errors": 0,
+      "console_warnings": 0,
+      "image_count": 0,
+      "loaded_images": 0,
+      "probes": {
+        "main": {
+          "width": 390,
+          "left": 0,
+          "right": 390,
+          "height": 11477.3
+        },
+        "hero_grid": {
+          "width": 390,
+          "left": 0,
+          "right": 390,
+          "height": 1045.8
+        },
+        "cockpit": {
+          "width": 354,
+          "left": 18,
+          "right": 372,
+          "height": 469.8
+        },
+        "project_rows": {
+          "width": 320,
+          "left": 35,
+          "right": 355,
+          "height": 116.6
+        },
+        "quote_grid": {
+          "width": 320,
+          "left": 35,
+          "right": 355,
+          "height": 1385.1
+        },
+        "plan_grid": {
+          "width": 320,
+          "left": 35,
+          "right": 355,
+          "height": 1148.9
+        },
+        "recovery_table": {
+          "width": 354,
+          "left": 18,
+          "right": 372,
+          "height": 868.8
+        }
+      }
+    },
+    {
+      "id": "768x1024",
+      "width": 768,
+      "height": 1024,
+      "client_width": 768,
+      "scroll_width": 768,
+      "console_errors": 0,
+      "console_warnings": 0,
+      "image_count": 0,
+      "loaded_images": 0,
+      "probes": {
+        "main": {
+          "width": 768,
+          "left": 0,
+          "right": 768,
+          "height": 8130.1
+        },
+        "hero_grid": {
+          "width": 768,
+          "left": 0,
+          "right": 768,
+          "height": 917.1
+        },
+        "cockpit": {
+          "width": 718.9,
+          "left": 24.6,
+          "right": 743.4,
+          "height": 449.7
+        },
+        "project_rows": {
+          "width": 684.9,
+          "left": 41.6,
+          "right": 726.4,
+          "height": 133.6
+        },
+        "quote_grid": {
+          "width": 684.9,
+          "left": 41.6,
+          "right": 726.4,
+          "height": 842
+        },
+        "plan_grid": {
+          "width": 684.9,
+          "left": 41.6,
+          "right": 726.4,
+          "height": 755
+        },
+        "recovery_table": {
+          "width": 718.9,
+          "left": 24.6,
+          "right": 743.4,
+          "height": 394.7
+        }
+      }
+    },
+    {
+      "id": "1440x1000",
+      "width": 1440,
+      "height": 1000,
+      "client_width": 1440,
+      "scroll_width": 1440,
+      "console_errors": 0,
+      "console_warnings": 0,
+      "image_count": 0,
+      "loaded_images": 0,
+      "probes": {
+        "main": {
+          "width": 1440,
+          "left": 0,
+          "right": 1440,
+          "height": 6981.4
+        },
+        "hero_grid": {
+          "width": 1280,
+          "left": 80,
+          "right": 1360,
+          "height": 514.6
+        },
+        "cockpit": {
+          "width": 676.7,
+          "left": 651.3,
+          "right": 1328,
+          "height": 480.3
+        },
+        "project_rows": {
+          "width": 1166,
+          "left": 137,
+          "right": 1303,
+          "height": 133.6
+        },
+        "quote_grid": {
+          "width": 1166,
+          "left": 137,
+          "right": 1303,
+          "height": 475.3
+        },
+        "plan_grid": {
+          "width": 1166,
+          "left": 137,
+          "right": 1303,
+          "height": 462.4
+        },
+        "recovery_table": {
+          "width": 1216,
+          "left": 112,
+          "right": 1328,
+          "height": 286.3
+        }
+      }
+    },
+    {
+      "id": "1920x1080",
+      "width": 1920,
+      "height": 1080,
+      "client_width": 1920,
+      "scroll_width": 1920,
+      "console_errors": 0,
+      "console_warnings": 0,
+      "image_count": 0,
+      "loaded_images": 0,
+      "probes": {
+        "main": {
+          "width": 1920,
+          "left": 0,
+          "right": 1920,
+          "height": 7036.4
+        },
+        "hero_grid": {
+          "width": 1280,
+          "left": 320,
+          "right": 1600,
+          "height": 516.7
+        },
+        "cockpit": {
+          "width": 676.7,
+          "left": 891.3,
+          "right": 1568,
+          "height": 480.3
+        },
+        "project_rows": {
+          "width": 1166,
+          "left": 377,
+          "right": 1543,
+          "height": 133.6
+        },
+        "quote_grid": {
+          "width": 1166,
+          "left": 377,
+          "right": 1543,
+          "height": 475.3
+        },
+        "plan_grid": {
+          "width": 1166,
+          "left": 377,
+          "right": 1543,
+          "height": 462.4
+        },
+        "recovery_table": {
+          "width": 1216,
+          "left": 352,
+          "right": 1568,
+          "height": 286.3
+        }
+      }
+    },
+    {
+      "id": "2560x1080",
+      "width": 2560,
+      "height": 1080,
+      "client_width": 2560,
+      "scroll_width": 2560,
+      "console_errors": 0,
+      "console_warnings": 0,
+      "image_count": 0,
+      "loaded_images": 0,
+      "probes": {
+        "main": {
+          "width": 2560,
+          "left": 0,
+          "right": 2560,
+          "height": 7036.4
+        },
+        "hero_grid": {
+          "width": 1280,
+          "left": 640,
+          "right": 1920,
+          "height": 516.7
+        },
+        "cockpit": {
+          "width": 676.7,
+          "left": 1211.3,
+          "right": 1888,
+          "height": 480.3
+        },
+        "project_rows": {
+          "width": 1166,
+          "left": 697,
+          "right": 1863,
+          "height": 133.6
+        },
+        "quote_grid": {
+          "width": 1166,
+          "left": 697,
+          "right": 1863,
+          "height": 475.3
+        },
+        "plan_grid": {
+          "width": 1166,
+          "left": 697,
+          "right": 1863,
+          "height": 462.4
+        },
+        "recovery_table": {
+          "width": 1216,
+          "left": 672,
+          "right": 1888,
+          "height": 286.3
+        }
+      }
+    }
+  ],
+  "probe_invariants": [
+    {
+      "probe": "main",
+      "viewports": [
+        "320x568",
+        "390x844",
+        "768x1024",
+        "1440x1000",
+        "1920x1080",
+        "2560x1080"
+      ],
+      "max_shrink_px": 2,
+      "min_width": 200
+    },
+    {
+      "probe": "cockpit",
+      "viewports": [
+        "320x568",
+        "390x844",
+        "768x1024",
+        "1440x1000",
+        "1920x1080",
+        "2560x1080"
+      ],
+      "max_shrink_px": 2,
+      "min_width": 200
+    },
+    {
+      "probe": "hero_grid",
+      "viewports": [
+        "320x568",
+        "390x844",
+        "768x1024",
+        "1440x1000",
+        "1920x1080",
+        "2560x1080"
+      ],
+      "max_shrink_px": 2,
+      "min_width": 200
+    }
+  ],
+  "extras": [
+    {
+      "id": "320x568",
+      "over": [],
+      "small": [],
+      "skip_first": true,
+      "sections": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "4",
+        "4",
+        "4",
+        "5",
+        "7"
+      ],
+      "doc_height": 12421,
+      "body_scroll_width": 320
+    },
+    {
+      "id": "390x844",
+      "over": [],
+      "small": [],
+      "skip_first": true,
+      "sections": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "4",
+        "4",
+        "4",
+        "5",
+        "7"
+      ],
+      "doc_height": 11738,
+      "body_scroll_width": 390
+    },
+    {
+      "id": "768x1024",
+      "over": [],
+      "small": [],
+      "skip_first": true,
+      "sections": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "4",
+        "4",
+        "4",
+        "5",
+        "7"
+      ],
+      "doc_height": 8390,
+      "body_scroll_width": 768
+    },
+    {
+      "id": "1440x1000",
+      "over": [],
+      "small": [],
+      "skip_first": true,
+      "sections": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "4",
+        "4",
+        "4",
+        "5",
+        "7"
+      ],
+      "doc_height": 7206,
+      "body_scroll_width": 1440
+    },
+    {
+      "id": "1920x1080",
+      "over": [],
+      "small": [],
+      "skip_first": true,
+      "sections": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "4",
+        "4",
+        "4",
+        "5",
+        "7"
+      ],
+      "doc_height": 7261,
+      "body_scroll_width": 1920
+    },
+    {
+      "id": "2560x1080",
+      "over": [],
+      "small": [],
+      "skip_first": true,
+      "sections": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "4",
+        "4",
+        "4",
+        "5",
+        "7"
+      ],
+      "doc_height": 7261,
+      "body_scroll_width": 2560
+    }
+  ],
+  "console_issues": []
+}

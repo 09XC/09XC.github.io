@@ -1,0 +1,14 @@
+import { chromium } from 'playwright-core';
+import fs from 'node:fs';
+const EDGE='C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe';
+const b=await chromium.launch({executablePath:EDGE,headless:true});
+const c=await b.newContext({viewport:{width:1280,height:900}});
+const p=await c.newPage();
+const errs=[]; p.on('pageerror',e=>errs.push(String(e).slice(0,120))); p.on('console',m=>{if(m.type()==='error')errs.push(m.text().slice(0,120))});
+await p.goto('file:///C:/Users/zxc/Desktop/dumate/solo-os/index.html',{waitUntil:'load'});
+await p.waitForTimeout(600);
+await p.click('#btnDemo');
+await p.waitForTimeout(500);
+const r=await p.evaluate(()=>({rows:document.querySelectorAll('#projectList .row').length,kpi:document.querySelector('#kReceived').textContent,storage:document.querySelector('#storageState')?.textContent,stored:(()=>{try{return !!localStorage.getItem('solo-os:v1')}catch(e){return 'blocked'}})()}));
+fs.writeFileSync('C:/Users/zxc/Desktop/dumate/solo-os/.design-suite/file-run.json', JSON.stringify({...r,errs}));
+process.exit(0);
